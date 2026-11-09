@@ -1,9 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useApi } from "@/lib/hooks";
-import type { Space, Timeline, TimelineItem } from "@/lib/api-types.gen";
+import type { ClipCard, PhotoRef, Space, Timeline, TimelineItem } from "@/lib/api-types.gen";
 import { ClipCardView } from "./ClipCardView";
+import { Slideshow } from "./Slideshow";
+import { api, errorMessage } from "@/lib/api";
+import type { Collection } from "@/lib/api-types.gen";
 import { Empty, ErrorBox, Spinner } from "./Feedback";
 
 function Items({ items, space, canFavorite }: { items: TimelineItem[]; space: Space; canFavorite: boolean }) {
@@ -45,6 +49,8 @@ export function TimelineView({ space, canFavorite }: { space: Space; canFavorite
   if (favorites) qs.set("favorites", "true");
   const tl = useApi<Timeline>(`/spaces/${space.id}/timeline${qs.toString() ? `?${qs}` : ""}`);
   const [allTags, setAllTags] = useState<[string, number][]>([]);
+  const [show, setShow] = useState<{ photos: PhotoRef[]; clips: ClipCard[] } | null>(null);
+  const [note, setNote] = useState("");
   // 주제 칩은 필터를 걸지 않은 첫 응답의 태그 개수로 만든다
   useEffect(() => {
     if (tl.data && !tag && !favorites) setAllTags(Object.entries(tl.data.tag_counts).slice(0, 14));
@@ -71,6 +77,11 @@ export function TimelineView({ space, canFavorite }: { space: Space; canFavorite
           <button className={`chip min-h-10 ${!tag && !favorites ? "border-ink bg-ink text-paper" : ""}`} onClick={() => { setTag(null); setFavorites(false); }}>
             전체
           </button>
+          {canFavorite && !space.is_sample && (
+            <Link href={`/spaces/${space.id}/collections`} className="chip min-h-10">
+              모음
+            </Link>
+          )}
           {canFavorite && (
             <button className={`chip min-h-10 ${favorites ? "border-ink bg-ink text-paper" : ""}`} onClick={() => { setFavorites(!favorites); setTag(null); }} aria-pressed={favorites}>
               ★ 즐겨찾기
@@ -90,12 +101,43 @@ export function TimelineView({ space, canFavorite }: { space: Space; canFavorite
           {favorites ? "대화나 타임라인에서 ☆를 눌러 모아 보세요." : "자료를 올리고 목소리를 확인하면 여기에 날짜별로 모여요."}
         </Empty>
       )}
-      {tl.data?.days.map((d) => (
-        <section key={d.date || "unknown"} aria-label={d.label}>
-          <h3 className="sticky top-14 z-10 -mx-4 bg-paper/95 px-4 py-2 font-semibold text-ink-soft backdrop-blur">{d.label}</h3>
-          <Items items={d.items} space={space} canFavorite={canFavorite} />
-        </section>
-      ))}
+      {favorites && canFavorite && tl.data && tl.data.total > 0 && space.role !== "viewer" && !space.is_sample && (
+        <button
+          className="btn-soft w-full"
+          onClick={async () => {
+            const title = prompt("모음 이름을 지어 주세요", `${space.person_name}의 목소리 모음`);
+            if (!title) return;
+            const ids = tl.data!.days.flatMap((d) => d.items.filter((i) => i.clip).map((i) => i.clip!.clip_id));
+            try {
+              await api.post<Collection>(`/spaces/${space.id}/collections`, { title, clip_ids: ids });
+              setNote("모음을 만들었어요. 위의 ‘모음’에서 이어서 들을 수 있어요.");
+            } catch (e) {
+              setNote(errorMessage(e));
+            }
+          }}
+        >
+          즐겨찾기로 모음 만들기
+        </button>
+      )}
+      {note && <p className="text-sm text-sage" role="status">{note}</p>}
+      {tl.data?.days.map((d) => {
+        const photos = d.items.filter((i) => i.photo).map((i) => i.photo!);
+        const clips = d.items.filter((i) => i.clip).map((i) => i.clip!);
+        return (
+          <section key={d.date || "unknown"} aria-label={d.label}>
+            <h3 className="sticky top-14 z-10 -mx-4 flex items-center gap-2 bg-paper/95 px-4 py-2 font-semibold text-ink-soft backdrop-blur">
+              {d.label}
+              {photos.length > 0 && clips.length > 0 && (
+                <button className="ml-auto rounded-full bg-accent-soft px-3 py-1 text-sm text-accent-strong" onClick={() => setShow({ photos, clips })}>
+                  ▶ 사진과 함께 듣기
+                </button>
+              )}
+            </h3>
+            <Items items={d.items} space={space} canFavorite={canFavorite} />
+          </section>
+        );
+      })}
+      {show && <Slideshow photos={show.photos} clips={show.clips} personName={space.person_name} onClose={() => setShow(null)} />}
     </div>
   );
 }
