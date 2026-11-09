@@ -10,7 +10,6 @@ const nextConfig: NextConfig = {
   experimental: {
     // 잠든 API(Render 무료)가 깨어나는 데 1분 가까이 걸릴 수 있다
     proxyTimeout: 120_000,
-    externalDir: true,
   },
   async rewrites() {
     return [{ source: "/api/:path*", destination: `${apiOrigin}/api/:path*` }];
