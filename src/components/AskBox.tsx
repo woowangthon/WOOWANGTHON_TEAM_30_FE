@@ -18,7 +18,7 @@ export function AskBox({ base, personName, disabled }: { base: string; personNam
       }}
     >
       <label htmlFor="ask" className="block font-serif text-xl font-bold">
-        {josa(personName, "에게", "에게")} 말을 걸어 보세요
+        {personName}에게 말을 걸어 보세요
       </label>
       <p className="mt-1 text-[0.95rem] text-ink-soft">
         새 말을 지어내지 않아요. {josa(personName, "이", "가")} 실제로 했던 말을 녹음에서 찾아 들려드려요.

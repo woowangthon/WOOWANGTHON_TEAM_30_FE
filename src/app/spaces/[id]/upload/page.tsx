@@ -25,6 +25,14 @@ export default function UploadPage() {
   const [dragging, setDragging] = useState(false);
   const editable = canEdit(space);
 
+  // 처리가 모두 끝나면 공간 정보(목소리 확인 대기 수 등)를 새로 받는다
+  const busy = assets.data?.assets.some((a) => ["uploaded", "queued", "processing"].includes(a.status)) ?? false;
+  const wasBusy = useRef(false);
+  useEffect(() => {
+    if (wasBusy.current && !busy) void reloadSpace();
+    wasBusy.current = busy;
+  }, [busy, reloadSpace]);
+
   const allowed = config.data?.limits.allowed_extensions ?? [];
   const maxMb = config.data?.limits.max_file_mb ?? 25;
 
