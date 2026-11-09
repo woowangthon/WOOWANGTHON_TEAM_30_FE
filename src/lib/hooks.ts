@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api, ApiError } from "./api";
 import type { User } from "./api-types.gen";
+import { applyTextSize, readTextSize } from "./prefs";
 
 export interface ApiState<T> {
   data: T | undefined;
@@ -48,6 +49,10 @@ export function useApi<T>(path: string | null): ApiState<T> {
 export function useMe(required = true): ApiState<User> {
   const router = useRouter();
   const state = useApi<User>("/me");
+  useEffect(() => {
+    // 계정에 저장된 큰 글씨 설정을 다른 기기에서도 적용한다
+    if (state.data?.prefs.large_text || readTextSize() === "large") applyTextSize("large");
+  }, [state.data]);
   useEffect(() => {
     if (required && state.error?.status === 401) {
       const next = typeof window !== "undefined" ? window.location.pathname : "/spaces";
