@@ -9,6 +9,7 @@ import type { Space } from "@/lib/api-types.gen";
 import { Shell, PageTitle } from "@/components/Shell";
 import { ErrorBox, Spinner } from "@/components/Feedback";
 import { UserMenu } from "@/components/UserMenu";
+import { Notices } from "@/components/Notices";
 
 const RELATIONS = ["어머니", "아버지", "할머니", "할아버지", "배우자", "형제자매", "자녀", "친구"];
 
@@ -44,6 +45,7 @@ export default function SpacesPage() {
   return (
     <Shell right={me.data && <UserMenu user={me.data} />}>
       <PageTitle title="추억 공간" sub="한 사람마다 공간을 하나씩 만들어요. 공간은 나와 초대한 가족만 볼 수 있어요." />
+      {me.data && <Notices />}
       {spaces.loading && <Spinner />}
       {spaces.error && <ErrorBox message={spaces.error.messageKo} onRetry={spaces.reload} />}
       <ul className="space-y-3">
