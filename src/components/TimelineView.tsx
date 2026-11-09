@@ -29,6 +29,14 @@ function Items({ items, space, canFavorite }: { items: TimelineItem[]; space: Sp
   );
 }
 
+/** '1년 전 오늘', '3년 전 오늘', 여러 해가 섞이면 '예전 오늘' */
+function onThisDayTitle(items: TimelineItem[]): string {
+  const years = new Set(items.map((i) => (i.clip?.date || i.photo?.date || "").slice(0, 4)).filter(Boolean));
+  if (years.size !== 1) return "예전 오늘";
+  const diff = new Date().getFullYear() - Number([...years][0]);
+  return diff > 0 ? `${diff}년 전 오늘` : "예전 오늘";
+}
+
 export function TimelineView({ space, canFavorite }: { space: Space; canFavorite: boolean }) {
   const [tag, setTag] = useState<string | null>(null);
   const [favorites, setFavorites] = useState(false);
@@ -53,7 +61,7 @@ export function TimelineView({ space, canFavorite }: { space: Space; canFavorite
       {tl.data && tl.data.on_this_day.length > 0 && !tag && !favorites && (
         <section className="rounded-3xl border border-accent/30 bg-accent-soft p-4" aria-labelledby="otd">
           <h2 id="otd" className="mb-3 font-serif text-lg font-bold text-accent-strong">
-            지난해 오늘
+            {onThisDayTitle(tl.data.on_this_day)}
           </h2>
           <Items items={tl.data.on_this_day} space={space} canFavorite={canFavorite} />
         </section>
