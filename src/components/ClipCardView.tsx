@@ -29,7 +29,11 @@ export function ClipCardView({
         {nearby && <span className="rounded-full bg-paper px-2 py-0.5 text-xs">가까운 추억</span>}
       </p>
       {card.question && <p className="text-sm text-ink-soft">질문: {card.question}</p>}
-      <blockquote className="font-serif text-lg leading-relaxed text-ink">“{card.transcript}”</blockquote>
+      {card.transcript ? (
+        <blockquote className="font-serif text-lg leading-relaxed text-ink">“{card.transcript}”</blockquote>
+      ) : (
+        <p className="text-ink-faint">자막이 아직 없어요. 들어 보시고 ‘목소리 확인’에서 적을 수 있어요.</p>
+      )}
       <div className="flex flex-wrap items-center gap-3">
         <ClipPlayer url={card.audio_url} status={card.audio_status} label="목소리 듣기" size="lg" />
         {canFavorite && (
