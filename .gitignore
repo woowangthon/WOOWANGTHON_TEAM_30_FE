@@ -1,0 +1,17 @@
+# Node
+node_modules/
+.next/
+out/
+test-results/
+.e2e-logs/
+playwright-report/
+blob-report/
+*.tsbuildinfo
+
+# 환경 변수 (커밋하지 않음)
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
