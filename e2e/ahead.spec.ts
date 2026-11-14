@@ -15,7 +15,7 @@ test("미리 남기기 링크로 녹음한다 (가짜 마이크)", async ({ page
   const rec = await ctx.newPage();
   await rec.goto(url.replace(/^https?:\/\/[^/]+/, process.env.E2E_BASE_URL || "http://localhost:3100"));
   await expect(rec.getByText("녹음하기 전에 읽어 주세요")).toBeVisible();
-  await expect(rec.getByText("새 말이나 새 음성을 만들지 않아요")).toBeVisible();
+  await expect(rec.getByText("새 음성을 만들지 않아요", { exact: false })).toBeVisible();
   await rec.getByRole("button", { name: "네, 이해했어요. 시작할게요" }).click();
   await rec.getByRole("button", { name: "녹음 시작" }).click();
   await rec.waitForTimeout(2500);

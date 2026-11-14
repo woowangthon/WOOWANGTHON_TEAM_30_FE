@@ -216,7 +216,7 @@ function Reply({ r, person }: { r: TalkResponse; person: string }) {
       ) : (
         <PersonBubble person={person} dashed>
           <p className="text-lg leading-relaxed text-ink">{r.text}</p>
-          {/* 합성 음성 자리: 태효 쪽 SynthVoiceReply 컴포넌트를 여기에 붙인다 ('AI 합성 음성' 표시 유지). 지금은 연결하지 않음. */}
+          {/* 음성 합성은 하지 않는다. 붙인다면 이 말풍선 안에 'AI 합성 음성'으로 표시한다. */}
           <Sources sources={r.sources} person={person} />
         </PersonBubble>
       )}
