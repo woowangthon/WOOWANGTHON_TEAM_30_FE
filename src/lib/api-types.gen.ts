@@ -58,13 +58,9 @@ export type LinkStatus = (typeof LINK_STATUS_VALUES)[number];
 export const QUESTION_CATEGORY_VALUES = ["childhood", "youth", "love_family", "to_family", "life_advice", "food", "holidays", "everyday", "health_heart", "custom"] as const;
 export type QuestionCategory = (typeof QUESTION_CATEGORY_VALUES)[number];
 
-/** 기억책 상태. draft는 가족 검수 전, approved는 가족이 승인한 책. */
-export const BOOK_STATUS_VALUES = ["draft", "approved"] as const;
-export type BookStatus = (typeof BOOK_STATUS_VALUES)[number];
-
-/** 기억 통화 답의 종류. original: 원본 녹음, generated: AI 생성(근거 표시), guide: 여운 안내, crisis: 위기 전환 */
-export const CALL_MODE_VALUES = ["original", "generated", "guide", "crisis"] as const;
-export type CallMode = (typeof CALL_MODE_VALUES)[number];
+/** 기억 대화 답장의 종류. original: 원본 녹음, generated: AI가 만든 말(근거 표시), guide: 여운 안내, crisis: 위기 전환 */
+export const TALK_MODE_VALUES = ["original", "generated", "guide", "crisis"] as const;
+export type TalkMode = (typeof TALK_MODE_VALUES)[number];
 
 export interface ErrorBody {
   /** 기계가 읽는 오류 코드 (예: not_found, quota_exceeded) */
@@ -575,56 +571,18 @@ export interface CollectionList {
   collections: Collection[];
 }
 
-/** 책 문단. AI가 쓴 정리 문장이고, clip_ids는 근거가 된 원본 녹음이다. 근거가 없으면 grounded=false로 표시한다. */
-export interface BookParagraph {
-  id: string;
-  text: string;
-  clip_ids: string[];
-  grounded: boolean;
-  /** 가족이 고친 문단 */
-  edited: boolean;
-}
-
-export interface BookChapter {
-  id: string;
-  title: string;
-  /** 예: 1970년대 / 시기 모름 */
-  period?: string | null;
-  paragraphs: BookParagraph[];
-}
-
-/** 목소리가 들리는 기억책. clips에는 문단 근거 클립의 카드가 한 번씩 들어 있다. */
-export interface Book {
-  exists: boolean;
-  status?: BookStatus | null;
-  title?: string | null;
-  chapters: BookChapter[];
-  clips: ClipCard[];
-  generated_by?: string | null;
-  updated_at?: string | null;
-  /** 근거 클립이 붙은 문단 비율 */
-  grounded_ratio?: number | null;
-  can_edit: boolean;
-  /** 책을 만들 때 쓸 수 있는 그 사람의 녹음 수 */
-  source_clip_count?: number;
-}
-
-export interface BookParagraphUpdate {
-  text: string;
-}
-
-export interface CallTurn {
+export interface TalkTurn {
   role: "user" | "reply";
   text: string;
 }
 
-export interface CallRequest {
+export interface TalkRequest {
   message: string;
-  history?: CallTurn[];
+  history?: TalkTurn[];
 }
 
-export interface CallResponse {
-  mode: CallMode;
+export interface TalkResponse {
+  mode: TalkMode;
   /** generated면 AI가 만든 말(그 사람 말투), 그 밖에는 여운 안내 */
   text: string;
   /** original: 들려줄 원본 */
@@ -636,26 +594,25 @@ export interface CallResponse {
   remaining_today?: number | null;
 }
 
-export interface LLMBookParagraph {
-  text: string;
-  clip_ids: string[];
+/** 녹음에서 뽑은 그 사람의 말하기 특징 (대화 답의 말투를 맞추는 데만 쓴다) */
+export interface LLMPersonaCard {
+  /** 듣는 가족을 부르는 말 (예: 우리 강아지) */
+  calls_user: string;
+  /** 자기를 부르는 말 (예: 할매) */
+  self_ref: string;
+  /** 어미·사투리·말버릇 요약 */
+  speech_style: string;
+  /** 자주 쓰는 표현 (자막 그대로) */
+  phrases: string[];
+  /** 자주 나오는 이야기 주제 */
+  topics: string[];
 }
 
-export interface LLMBookChapter {
-  title: string;
-  period: string;
-  paragraphs: LLMBookParagraph[];
-}
-
-/** LLM 이야기 정리 결과. clip_ids는 서버가 받은 목록 안에서만 인정한다. */
-export interface LLMBookDraft {
-  title: string;
-  chapters: LLMBookChapter[];
-}
-
-/** 기억 통화의 생성 답. source_clip_ids는 이 장의 클립 안에서만 인정하고, 근거가 없으면 refuse=true. */
-export interface LLMCallReply {
+/** 대화 답장 하나. use_clip_id가 후보 안의 클립이면 그 원본 녹음을 그대로 답장으로 쓴다. */
+export interface LLMTalkReply {
   refuse: boolean;
+  /** 원본 녹음 하나가 그대로 답이 되면 그 clip_id, 아니면 빈 문자열 */
+  use_clip_id: string;
   text: string;
   source_clip_ids: string[];
 }
