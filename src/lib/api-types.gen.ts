@@ -616,3 +616,8 @@ export interface LLMTalkReply {
   text: string;
   source_clip_ids: string[];
 }
+
+/** 목소리로 화자를 나누지 못한 녹음을 내용으로 나눈 결과. labels는 문장 순서대로 A 또는 B. */
+export interface LLMSpeakerSplit {
+  labels: ("A" | "B")[];
+}
