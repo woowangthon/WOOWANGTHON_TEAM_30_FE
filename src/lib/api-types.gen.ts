@@ -615,6 +615,10 @@ export interface LLMTalkReply {
   use_clip_id: string;
   text: string;
   source_clip_ids: string[];
+  /** feeling: 안부·축하·위로·그리움에 마음으로 답함, fact: 그분의 경험·기억·사실·정보·방법·조언을 묻는 말에 답함 */
+  kind: "feeling" | "fact";
+  /** 보낸 말(과 대화 기록)에 보이는 자살·자해 위험. 서버는 규칙보다 높일 때만 따른다 */
+  risk: "none" | "watch" | "high";
 }
 
 /** 목소리로 화자를 나누지 못한 녹음을 내용으로 나눈 결과. labels는 문장 순서대로 A 또는 B. */
