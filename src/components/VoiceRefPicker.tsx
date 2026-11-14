@@ -1,9 +1,9 @@
 "use client";
 
-import { useId } from "react";
+import { useId, useState } from "react";
 import { formatDuration } from "@/lib/format";
 import { useAudioToggle } from "@/lib/use-audio-toggle";
-import { clipDurationSec, pickByIds, summarizeRefClips, type VoiceRefClip } from "@/lib/voice-ref";
+import { clipDurationSec, pickByIds, sameIdSet, summarizeRefClips, type VoiceRefClip } from "@/lib/voice-ref";
 
 export type VoicePreviewStatus = "idle" | "loading" | "ready" | "error";
 
@@ -15,7 +15,7 @@ interface Props {
   onSelectedChange: (ids: string[]) => void;
   /** '이 목소리로 들어 보기' — 합성은 부르는 쪽이 한다 */
   onPreview: (ids: string[]) => void;
-  /** '그분 같아요' */
+  /** '그분 같아요' — 넘어오는 id 는 현재 선택이 아니라 '미리 들은' 구간이다 */
   onApprove: (ids: string[]) => void;
   /** '다시 고를게요' */
   onReject: () => void;
@@ -49,8 +49,12 @@ export function VoiceRefPicker({
   const picked = pickByIds(clips, selectedIds);
   const sum = summarizeRefClips(picked);
   const pickedIds = picked.map((c) => c.id);
+  const [previewedIds, setPreviewedIds] = useState<string[] | null>(null);
   const loading = previewStatus === "loading";
   const heard = previewStatus === "ready" && !!previewAudioUrl;
+  // 미리 듣기를 요청한 시점의 선택. 부르는 쪽이 결과만 넣어 준 경우에는 현재 선택으로 본다.
+  const heardIds = previewedIds ?? pickedIds;
+  const changed = heard && !sameIdSet(heardIds, pickedIds);
 
   const toggle = (id: string, on: boolean) => {
     const next = on ? [...selectedIds.filter((x) => x !== id), id] : selectedIds.filter((x) => x !== id);
@@ -58,7 +62,7 @@ export function VoiceRefPicker({
   };
 
   return (
-    <section aria-labelledby={headingId} className="space-y-5">
+    <section aria-labelledby={headingId} aria-busy={loading} className="space-y-5">
       <h2 id={headingId} className="font-serif text-xl font-bold">
         그분 목소리만 또렷하게 들리는 부분을 골라 주세요
       </h2>
@@ -67,19 +71,21 @@ export function VoiceRefPicker({
         <p className="rounded-2xl border border-line bg-card px-4 py-3 text-ink-soft">고를 수 있는 부분이 아직 없어요.</p>
       ) : (
         <ul className="space-y-3">
-          {clips.map((c) => {
+          {clips.map((c, i) => {
             const on = selectedIds.includes(c.id);
             const checkId = `${headingId}-check-${c.id}`;
+            const textId = `${headingId}-text-${c.id}`;
+            const order = `${i + 1}번째 녹음, ${Math.floor(clipDurationSec(c))}초`;
             return (
               <li
                 key={c.id}
                 className={`rounded-2xl border p-4 ${on ? "border-sage bg-sage-soft/50" : "border-line bg-card"}`}
               >
                 <div className="flex flex-wrap items-center gap-3">
-                  <ClipPlayButton key={c.audio_url ?? c.id} clip={c} />
+                  <ClipPlayButton key={c.audio_url ?? c.id} clip={c} order={order} describedBy={textId} />
                   <span className="text-sm text-ink-soft">{formatDuration(clipDurationSec(c))}</span>
                 </div>
-                <p className="mt-2 whitespace-pre-wrap text-lg">
+                <p id={textId} className="mt-2 whitespace-pre-wrap text-lg">
                   {c.text.trim() ? `“${c.text}”` : <span className="text-ink-faint">(자막 없음)</span>}
                 </p>
                 <label
@@ -91,7 +97,9 @@ export function VoiceRefPicker({
                     type="checkbox"
                     className="h-7 w-7 shrink-0 accent-[#5f7b66]"
                     checked={on}
-                    disabled={disabled}
+                    disabled={disabled || loading}
+                    aria-label={`이 부분을 쓸게요, ${order}`}
+                    aria-describedby={textId}
                     onChange={(e) => toggle(c.id, e.target.checked)}
                   />
                   이 부분을 쓸게요
@@ -110,8 +118,11 @@ export function VoiceRefPicker({
           type="button"
           className="btn-primary min-h-14 w-full text-lg"
           disabled={disabled || loading || !sum.canSynthesize}
-          aria-disabled={disabled || loading || !sum.canSynthesize}
-          onClick={() => onPreview(pickedIds)}
+          aria-busy={loading}
+          onClick={() => {
+            setPreviewedIds(pickedIds);
+            onPreview(pickedIds);
+          }}
         >
           {loading ? "목소리를 만들고 있어요…" : "이 목소리로 들어 보기"}
         </button>
@@ -122,7 +133,13 @@ export function VoiceRefPicker({
           </p>
         )}
 
-        {heard && previewAudioUrl && (
+        {changed && (
+          <p role="status" className="rounded-2xl bg-accent-soft px-4 py-3 text-accent-strong">
+            고른 부분이 바뀌었어요. 다시 들어 보세요.
+          </p>
+        )}
+
+        {heard && !changed && previewAudioUrl && (
           <div className="space-y-3 border-t border-line pt-4">
             <PreviewPlayer key={previewAudioUrl} url={previewAudioUrl} />
             <p className="text-ink-soft">들어 보시고, 그분 목소리와 비슷한가요?</p>
@@ -131,11 +148,15 @@ export function VoiceRefPicker({
                 type="button"
                 className="btn min-h-14 bg-sage text-lg text-white hover:opacity-90"
                 disabled={disabled}
-                onClick={() => onApprove(pickedIds)}
+                onClick={() => onApprove(heardIds)}
               >
                 그분 같아요
               </button>
-              <button type="button" className="btn-ghost min-h-14 text-lg" disabled={disabled} onClick={onReject}>
+              <button type="button" className="btn-ghost min-h-14 text-lg" disabled={disabled} onClick={() => {
+                  setPreviewedIds(null);
+                  onReject();
+                }}
+              >
                 다시 고를게요
               </button>
             </div>
@@ -146,7 +167,7 @@ export function VoiceRefPicker({
   );
 }
 
-function ClipPlayButton({ clip }: { clip: VoiceRefClip }) {
+function ClipPlayButton({ clip, order, describedBy }: { clip: VoiceRefClip; order: string; describedBy: string }) {
   const ready = clip.audio_status === "ready" && !!clip.audio_url;
   const { playing, failed, toggle } = useAudioToggle(ready ? clip.audio_url : null);
   if (!ready) return <span className="text-sm text-ink-faint">재생할 녹음이 없어요</span>;
@@ -156,7 +177,8 @@ function ClipPlayButton({ clip }: { clip: VoiceRefClip }) {
         type="button"
         onClick={toggle}
         aria-pressed={playing}
-        aria-label={playing ? "원본 녹음 멈추기" : "원본 녹음 듣기"}
+        aria-label={`${playing ? "멈추기" : "듣기"}, ${order}`}
+        aria-describedby={describedBy}
         className={`inline-flex min-h-12 items-center gap-2 rounded-full px-5 font-semibold transition-colors ${
           playing ? "bg-accent text-white" : "bg-accent-soft text-accent-strong hover:bg-[#ecd6c7]"
         }`}
@@ -179,13 +201,13 @@ function PreviewPlayer({ url }: { url: string }) {
         aria-pressed={playing}
         aria-label={playing ? "AI 합성 음성 멈추기" : "AI 합성 음성 듣기"}
         className={`inline-flex min-h-14 items-center gap-2 rounded-full border-2 px-6 text-lg font-semibold transition-colors ${
-          playing ? "border-guide bg-guide text-white" : "border-guide/50 bg-guide-soft text-guide hover:border-guide"
+          playing ? "border-ink bg-ink text-paper" : "border-ink/40 bg-paper text-ink hover:border-ink"
         }`}
       >
         <span aria-hidden>{playing ? "❚❚" : "♪"}</span>
         <span>{playing ? "멈추기" : "합성 음성 듣기"}</span>
       </button>
-      <span className="rounded-full border border-guide/40 px-2 py-0.5 text-xs font-semibold text-guide">AI 합성 음성</span>
+      <span className="rounded-full border border-ink/40 px-2 py-0.5 text-xs font-semibold text-ink">AI 합성 음성</span>
       {failed && (
         <span role="alert" className="w-full text-xs text-alert">
           재생하지 못했어요. 잠시 뒤에 다시 눌러 주세요.

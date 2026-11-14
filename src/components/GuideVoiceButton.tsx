@@ -20,6 +20,7 @@ function Player({ url }: { url: string }) {
         type="button"
         onClick={toggle}
         aria-pressed={playing}
+        aria-label={playing ? "안내 목소리 멈추기" : "안내 목소리로 듣기"}
         className={`inline-flex min-h-11 items-center gap-2 rounded-xl border px-4 text-sm font-semibold transition-colors ${
           playing
             ? "border-guide bg-guide text-white"

@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   clipDurationSec,
   pickByIds,
+  sameIdSet,
   refMessage,
   suggestRefClips,
   summarizeRefClips,
@@ -114,5 +115,24 @@ describe("추천 고르기", () => {
   it("후보가 없으면 빈 목록, 합성 불가", () => {
     const r = suggestRefClips([]);
     expect(r).toEqual({ clips: [], totalSec: 0, canSynthesize: false });
+  });
+});
+
+describe("미리 들은 구간과 현재 선택 비교", () => {
+  it("순서가 달라도 같은 집합이면 같다", () => {
+    expect(sameIdSet(["a", "b"], ["b", "a"])).toBe(true);
+    expect(sameIdSet([], [])).toBe(true);
+  });
+  it("하나 빠지면 다르다(A·B 미리 듣기 뒤 B 해제)", () => {
+    expect(sameIdSet(["a", "b"], ["a"])).toBe(false);
+  });
+  it("하나 늘어도 다르다", () => {
+    expect(sameIdSet(["a"], ["a", "b"])).toBe(false);
+  });
+  it("개수가 같아도 내용이 다르면 다르다", () => {
+    expect(sameIdSet(["a", "b"], ["a", "c"])).toBe(false);
+  });
+  it("중복 id 는 한 번으로 센다", () => {
+    expect(sameIdSet(["a", "a"], ["a"])).toBe(true);
   });
 });

@@ -76,6 +76,15 @@ export function summarizeRefClips(clips: readonly VoiceRefClip[]): RefSummary {
   };
 }
 
+/** 두 id 목록이 순서와 상관없이 같은 집합인지. 미리 들은 구간과 현재 선택이 같은지 볼 때 쓴다. */
+export function sameIdSet(a: readonly string[], b: readonly string[]): boolean {
+  const sa = new Set(a);
+  const sb = new Set(b);
+  if (sa.size !== sb.size) return false;
+  for (const id of sa) if (!sb.has(id)) return false;
+  return true;
+}
+
 /** 선택된 id 에 해당하는 클립을 후보 목록 순서대로 돌려준다. */
 export function pickByIds(candidates: readonly VoiceRefClip[], ids: readonly string[]): VoiceRefClip[] {
   const set = new Set(ids);
