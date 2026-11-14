@@ -85,6 +85,31 @@ export function sameIdSet(a: readonly string[], b: readonly string[]): boolean {
   return true;
 }
 
+export interface ApproveCheck {
+  /** 미리 듣기 상태 */
+  status: "idle" | "loading" | "ready" | "error";
+  /** 미리 듣기 음성 주소 */
+  audioUrl?: string | null;
+  /** 그 음성을 만든 참조 클립 id(부모가 음성과 함께 넘긴다) */
+  previewIds?: readonly string[] | null;
+  /** 지금 고른 클립 id */
+  selectedIds: readonly string[];
+  /** 가족이 '다시 고를게요'로 거절한 음성 주소 */
+  rejectedUrl?: string | null;
+}
+
+/**
+ * '그분 같아요' 승인 UI 를 보여 줘도 되는지. 아래를 모두 만족할 때만 true.
+ * ready 상태, 음성 주소 있음, 거절한 주소가 아님, previewIds 가 비어 있지 않고 현재 선택과 같은 집합.
+ */
+export function canApprovePreview(c: ApproveCheck): boolean {
+  if (c.status !== "ready" || !c.audioUrl) return false;
+  if (c.rejectedUrl && c.rejectedUrl === c.audioUrl) return false;
+  if (!c.previewIds || c.previewIds.length === 0) return false;
+  if (c.selectedIds.length === 0) return false;
+  return sameIdSet(c.previewIds, c.selectedIds);
+}
+
 /** 선택된 id 에 해당하는 클립을 후보 목록 순서대로 돌려준다. */
 export function pickByIds(candidates: readonly VoiceRefClip[], ids: readonly string[]): VoiceRefClip[] {
   const set = new Set(ids);

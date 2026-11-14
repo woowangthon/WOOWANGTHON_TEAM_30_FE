@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   clipDurationSec,
+  canApprovePreview,
   pickByIds,
   sameIdSet,
   refMessage,
@@ -134,5 +135,43 @@ describe("미리 들은 구간과 현재 선택 비교", () => {
   });
   it("중복 id 는 한 번으로 센다", () => {
     expect(sameIdSet(["a", "a"], ["a"])).toBe(true);
+  });
+});
+
+describe("승인 UI 를 보여 줘도 되는지", () => {
+  const ok = { status: "ready" as const, audioUrl: "data:audio/wav;base64,AAA", previewIds: ["a", "b"], selectedIds: ["a", "b"] };
+  it("음성·previewIds·선택이 맞으면 가능", () => {
+    expect(canApprovePreview(ok)).toBe(true);
+    expect(canApprovePreview({ ...ok, selectedIds: ["b", "a"] })).toBe(true);
+  });
+  it("빈 선택 + ready 는 불가", () => {
+    expect(canApprovePreview({ ...ok, selectedIds: [] })).toBe(false);
+    expect(canApprovePreview({ ...ok, previewIds: [], selectedIds: [] })).toBe(false);
+  });
+  it("새 마운트 + 옛 음성 + 다른 선택은 불가", () => {
+    expect(canApprovePreview({ ...ok, selectedIds: ["c"] })).toBe(false);
+  });
+  it("거절한 뒤 같은 음성은 불가, 다른 음성은 가능", () => {
+    expect(canApprovePreview({ ...ok, rejectedUrl: ok.audioUrl })).toBe(false);
+    expect(canApprovePreview({ ...ok, rejectedUrl: "data:audio/wav;base64,OLD" })).toBe(true);
+  });
+  it("거절 뒤 선택을 바꿔도 같은 음성이면 불가", () => {
+    expect(canApprovePreview({ ...ok, rejectedUrl: ok.audioUrl, selectedIds: ["a"], previewIds: ["a"] })).toBe(false);
+  });
+  it("previewIds 가 null/없음/빈 목록이면 불가", () => {
+    expect(canApprovePreview({ ...ok, previewIds: null })).toBe(false);
+    expect(canApprovePreview({ ...ok, previewIds: undefined })).toBe(false);
+    expect(canApprovePreview({ ...ok, previewIds: [] })).toBe(false);
+  });
+  it("선택을 바꿨다가 되돌리면 다시 가능", () => {
+    expect(canApprovePreview({ ...ok, selectedIds: ["a"] })).toBe(false);
+    expect(canApprovePreview({ ...ok, selectedIds: ["a", "b"] })).toBe(true);
+  });
+  it("로딩·idle·error·음성 없음은 불가", () => {
+    expect(canApprovePreview({ ...ok, status: "loading" })).toBe(false);
+    expect(canApprovePreview({ ...ok, status: "idle" })).toBe(false);
+    expect(canApprovePreview({ ...ok, status: "error" })).toBe(false);
+    expect(canApprovePreview({ ...ok, audioUrl: null })).toBe(false);
+    expect(canApprovePreview({ ...ok, audioUrl: "" })).toBe(false);
   });
 });

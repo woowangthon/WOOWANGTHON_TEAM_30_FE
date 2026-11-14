@@ -19,7 +19,6 @@ function Player({ url }: { url: string }) {
       <button
         type="button"
         onClick={toggle}
-        aria-pressed={playing}
         aria-label={playing ? "AI 합성 음성 멈추기" : "AI 합성 음성 듣기"}
         className={`inline-flex min-h-11 items-center gap-2 rounded-full border-2 px-4 font-semibold transition-colors ${
           playing ? "border-ink bg-ink text-paper" : "border-ink/40 bg-paper text-ink hover:border-ink"

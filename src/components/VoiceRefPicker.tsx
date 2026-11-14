@@ -3,7 +3,7 @@
 import { useId, useState } from "react";
 import { formatDuration } from "@/lib/format";
 import { useAudioToggle } from "@/lib/use-audio-toggle";
-import { clipDurationSec, pickByIds, sameIdSet, summarizeRefClips, type VoiceRefClip } from "@/lib/voice-ref";
+import { clipDurationSec, canApprovePreview, pickByIds, summarizeRefClips, type VoiceRefClip } from "@/lib/voice-ref";
 
 export type VoicePreviewStatus = "idle" | "loading" | "ready" | "error";
 
@@ -23,6 +23,8 @@ interface Props {
   previewStatus?: VoicePreviewStatus;
   /** 합성된 미리 듣기 음성(data: 주소 등) */
   previewAudioUrl?: string | null;
+  /** 그 음성을 만든 참조 클립 id. 음성 주소와 반드시 함께 넘긴다(없으면 승인 버튼이 나오지 않는다) */
+  previewIds?: readonly string[] | null;
   /** 미리 듣기 실패 때 보여 줄 말 */
   previewError?: string | null;
   /** 승인 처리 중 등으로 모든 버튼을 잠글 때 */
@@ -42,6 +44,7 @@ export function VoiceRefPicker({
   onReject,
   previewStatus = "idle",
   previewAudioUrl,
+  previewIds,
   previewError,
   disabled = false,
 }: Props) {
@@ -49,12 +52,18 @@ export function VoiceRefPicker({
   const picked = pickByIds(clips, selectedIds);
   const sum = summarizeRefClips(picked);
   const pickedIds = picked.map((c) => c.id);
-  const [previewedIds, setPreviewedIds] = useState<string[] | null>(null);
+  const [rejectedUrl, setRejectedUrl] = useState<string | null>(null);
   const loading = previewStatus === "loading";
-  const heard = previewStatus === "ready" && !!previewAudioUrl;
-  // 미리 듣기를 요청한 시점의 선택. 부르는 쪽이 결과만 넣어 준 경우에는 현재 선택으로 본다.
-  const heardIds = previewedIds ?? pickedIds;
-  const changed = heard && !sameIdSet(heardIds, pickedIds);
+  const canApprove = canApprovePreview({
+    status: previewStatus,
+    audioUrl: previewAudioUrl,
+    previewIds,
+    selectedIds: pickedIds,
+    rejectedUrl,
+  });
+  // 음성은 있는데 지금 선택과 맞지 않을 때만 안내한다(거절한 음성은 조용히 숨긴다)
+  const changed =
+    previewStatus === "ready" && !!previewAudioUrl && previewAudioUrl !== rejectedUrl && !canApprove;
 
   const toggle = (id: string, on: boolean) => {
     const next = on ? [...selectedIds.filter((x) => x !== id), id] : selectedIds.filter((x) => x !== id);
@@ -120,7 +129,7 @@ export function VoiceRefPicker({
           disabled={disabled || loading || !sum.canSynthesize}
           aria-busy={loading}
           onClick={() => {
-            setPreviewedIds(pickedIds);
+            setRejectedUrl(null);
             onPreview(pickedIds);
           }}
         >
@@ -139,7 +148,7 @@ export function VoiceRefPicker({
           </p>
         )}
 
-        {heard && !changed && previewAudioUrl && (
+        {canApprove && previewAudioUrl && (
           <div className="space-y-3 border-t border-line pt-4">
             <PreviewPlayer key={previewAudioUrl} url={previewAudioUrl} />
             <p className="text-ink-soft">들어 보시고, 그분 목소리와 비슷한가요?</p>
@@ -148,12 +157,12 @@ export function VoiceRefPicker({
                 type="button"
                 className="btn min-h-14 bg-sage text-lg text-white hover:opacity-90"
                 disabled={disabled}
-                onClick={() => onApprove(heardIds)}
+                onClick={() => onApprove([...(previewIds ?? [])])}
               >
                 그분 같아요
               </button>
               <button type="button" className="btn-ghost min-h-14 text-lg" disabled={disabled} onClick={() => {
-                  setPreviewedIds(null);
+                  setRejectedUrl(previewAudioUrl ?? null);
                   onReject();
                 }}
               >
@@ -176,7 +185,6 @@ function ClipPlayButton({ clip, order, describedBy }: { clip: VoiceRefClip; orde
       <button
         type="button"
         onClick={toggle}
-        aria-pressed={playing}
         aria-label={`${playing ? "멈추기" : "듣기"}, ${order}`}
         aria-describedby={describedBy}
         className={`inline-flex min-h-12 items-center gap-2 rounded-full px-5 font-semibold transition-colors ${
@@ -198,7 +206,6 @@ function PreviewPlayer({ url }: { url: string }) {
       <button
         type="button"
         onClick={toggle}
-        aria-pressed={playing}
         aria-label={playing ? "AI 합성 음성 멈추기" : "AI 합성 음성 듣기"}
         className={`inline-flex min-h-14 items-center gap-2 rounded-full border-2 px-6 text-lg font-semibold transition-colors ${
           playing ? "border-ink bg-ink text-paper" : "border-ink/40 bg-paper text-ink hover:border-ink"
