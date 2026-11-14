@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 
 const TABS = [
   { href: "", label: "홈" },
-  { href: "/book", label: "기억책" },
   { href: "/chat", label: "대화" },
   { href: "/timeline", label: "타임라인" },
   { href: "/upload", label: "자료" },
@@ -18,7 +17,7 @@ const TABS = [
 export function SpaceNav({ spaceId, sample, pendingVoice }: { spaceId: string; sample?: boolean; pendingVoice?: number }) {
   const path = usePathname();
   const base = sample ? `/sample` : `/spaces/${spaceId}`;
-  const tabs = sample ? TABS.filter((t) => ["", "/book", "/chat", "/timeline"].includes(t.href)) : TABS;
+  const tabs = sample ? TABS.filter((t) => ["", "/chat", "/timeline"].includes(t.href)) : TABS;
   return (
     <nav aria-label="공간 메뉴" className="-mx-4 mb-6 overflow-x-auto px-4">
       <ul className="flex gap-2 whitespace-nowrap">
