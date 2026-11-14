@@ -19,7 +19,7 @@ export default function PrivacyPage() {
         </section>
         <section>
           <h2 className="font-bold">2. 쓰는 목적</h2>
-          <p className="text-ink-soft">올린 분과 초대받은 가족이 그분의 실제 목소리를 정리하고 다시 찾아 듣게 하는 데만 써요. 그분의 목소리나 말투로 새 문장·새 음성을 만들지 않고, 광고나 다른 목적에 쓰지 않아요.</p>
+          <p className="text-ink-soft">올린 분과 초대받은 가족이 그분의 실제 목소리를 정리하고, 다시 찾아 듣고, 메시지를 보내 대화하는 데만 써요. 녹음에 없는 말은 그분 말투로 짧은 글 답장을 만들 수 있고, 그때는 ‘AI가 만든 말’로 표시하고 근거 녹음을 보여 드려요. 그분의 목소리로 새 음성은 만들지 않고, 광고나 다른 목적에 쓰지 않아요.</p>
         </section>
         <section>
           <h2 className="font-bold">3. 보관과 삭제</h2>
@@ -31,7 +31,7 @@ export default function PrivacyPage() {
         </section>
         <section>
           <h2 className="font-bold">4. 외부 서비스</h2>
-          <p className="text-ink-soft">받아쓰기·검색을 위해 외부 AI 서비스(예: OpenAI, Anthropic, Google)를 쓸 수 있어요. 어떤 서비스로 무엇이 가는지는 각 공간의 설정 → 외부 서비스에서 볼 수 있어요. 입력을 학습에 쓰는 무료 등급은 정식 서비스에서 실제 사용자 자료에 쓰지 않아요.</p>
+          <p className="text-ink-soft">받아쓰기, 말투 요약, 답장 만들기, 검색을 위해 외부 AI 서비스(충북대 NOVA API Gateway와 그 뒤의 Soniox·Anthropic·OpenAI, 설정에 따라 Google 등)를 쓸 수 있어요. 어떤 서비스로 무엇이 가는지는 각 공간의 설정 → 외부 서비스에서 볼 수 있어요. 입력을 학습에 쓰는 무료 등급은 정식 서비스에서 실제 사용자 자료에 쓰지 않아요.</p>
         </section>
         <section>
           <h2 className="font-bold">5. 다른 사람의 목소리</h2>

@@ -28,9 +28,9 @@ export default function Home() {
         <section className="py-12 sm:py-20">
           <p className="text-accent-strong">소중한 사람의 실제 목소리로 남기는 추억</p>
           <h1 className="mt-3 font-serif text-[1.7rem] font-bold leading-tight sm:text-5xl">
-            그분이 실제로 했던 말을,
+            그분이 남긴 말은 그 목소리 그대로,
             <br />
-            그 목소리 그대로.
+            없는 말은 ‘AI가 만든 말’로 표시해요.
           </h1>
           <p className="mt-5 max-w-xl text-lg text-ink-soft">
             휴대폰에 흩어진 통화 녹음과 영상에서 그분의 목소리만 찾아 정리해 두고, 메시지를 보내면 그분 말투로 답장해 드려요. 녹음에 있는 말은 실제 목소리로, 없는 말은 ‘AI가 만든 말’로 표시하고 근거 녹음을 함께 보여 드려요.

@@ -10,7 +10,7 @@ import { useSpace } from "@/lib/space-context";
 import { formatBytes, formatDateKo } from "@/lib/format";
 import { ErrorBox, Notice, Spinner } from "@/components/Feedback";
 
-const FN_LABEL: Record<string, string> = { stt: "받아쓰기(음성 인식)", diarization: "목소리 나누기", llm: "녹음 고르기·주제 붙이기(LLM)", embedding: "뜻으로 찾기(임베딩)" };
+const FN_LABEL: Record<string, string> = { stt: "받아쓰기(음성 인식)", diarization: "목소리 나누기", llm: "녹음 고르기·주제 붙이기·답장 만들기(LLM)", embedding: "뜻으로 찾기(임베딩)" };
 const STATUS_LABEL: Record<string, string> = {
   active: "사용 중",
   not_configured: "키 없음",
@@ -159,7 +159,7 @@ function Providers({ space }: { space: Space }) {
   if (!p.data) return <Spinner />;
   return (
     <div className="space-y-4">
-      <p className="text-[0.95rem] text-ink-soft">자료가 어떤 외부 서비스로 가는지 보여 드려요. 외부 서비스는 찾고 고르는 데만 쓰고, 그분의 목소리나 말을 새로 만드는 데는 쓰지 않아요.</p>
+      <p className="text-[0.95rem] text-ink-soft">자료가 어떤 외부 서비스로 가는지 보여 드려요. 외부 서비스는 받아쓰기, 녹음 찾기, 그분 말투로 짧은 답장 만들기에 쓰고, 그분의 목소리를 만드는 데는 쓰지 않아요.</p>
       <ul className="space-y-3">
         {p.data.providers.map((x) => (
           <li key={`${x.function}-${x.provider}-${x.status}`} className={`rounded-2xl border p-4 ${x.status === "active" ? "border-line" : "border-dashed border-line opacity-80"}`}>

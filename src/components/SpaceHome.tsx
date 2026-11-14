@@ -12,7 +12,7 @@ export function SpaceHome({ space, base }: { space: Space; base: string }) {
   const steps = [
     { done: c.assets > 0, title: "자료 올리기", body: "통화 녹음, 영상, 음성 메시지, 사진을 올려요.", href: `${base}/upload` },
     { done: c.pending_voice === 0 && c.person_clips > 0, title: "목소리 확인", body: "어느 목소리가 그분인지 골라요.", href: `${base}/voices` },
-    { done: false, title: "말 걸기", body: "그분이 실제로 했던 말이 돌아와요.", href: `${base}/chat` },
+    { done: false, title: "말 걸기", body: "메시지를 보내면 그분 말투로 답장이 와요. 녹음에 있는 말은 실제 목소리로 들려 드려요.", href: `${base}/chat` },
   ];
   return (
     <div className="space-y-6">
