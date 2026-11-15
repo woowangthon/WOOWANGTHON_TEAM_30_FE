@@ -23,7 +23,7 @@ const ROLE_LABEL: Record<string, string> = { owner: "소유자", editor: "편집
 function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
   return (
     <section id={id} className="card scroll-mt-20 space-y-4" aria-labelledby={`${id}-title`}>
-      <h2 id={`${id}-title`} className="text-lg font-bold">{title}</h2>
+      <h2 id={`${id}-title`} className="section-title">{title}</h2>
       {children}
     </section>
   );

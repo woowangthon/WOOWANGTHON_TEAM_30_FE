@@ -1,25 +1,29 @@
 @import "tailwindcss";
 
-/* 여운 — 차분하고 따뜻한 색. 그 사람의 말(원본)과 여운 안내(서비스의 말)를 색으로도 구분한다. */
+/* 여운 — 해질녘 여운: 따뜻한 흰 바탕, 먹 갈색 글씨, 대추색 주색, 노을빛은 작은 표시에만.
+   그 사람의 말(원본, 대추색)과 AI가 만든 말·여운 안내(차가운 회청색)를 색으로도 구분한다. */
 @theme {
-  --color-paper: #fbf7f1;
-  --color-card: #ffffff;
-  --color-ink: #352f2a;
-  --color-ink-soft: #6b6159;
-  --color-ink-faint: #998e84;
+  --color-paper: #f9f6f1;
+  --color-paper-deep: #f1ebe2;
+  --color-card: #fffdfa;
+  --color-ink: #2b2420;
+  --color-ink-soft: #6a5f57;
+  --color-ink-faint: #9d928a;
   --color-line: #e8dfd4;
-  --color-accent: #9c5f45;
-  --color-accent-strong: #84492f;
-  --color-accent-soft: #f4e6dc;
-  --color-sage: #5f7b66;
-  --color-sage-soft: #e5eee6;
-  --color-guide: #50607e;
-  --color-guide-soft: #eaeef5;
+  --color-accent: #8c3f2b;
+  --color-accent-strong: #6e2f20;
+  --color-accent-soft: #f5e8e1;
+  --color-peach: #d98b4e;
+  --color-peach-soft: #f9ecdf;
+  --color-sage: #5f7363;
+  --color-sage-soft: #e9eee8;
+  --color-guide: #4f5d73;
+  --color-guide-soft: #edf0f4;
   --color-alert: #a3402e;
   --color-alert-soft: #fbe9e4;
   --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
     "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif;
-  --font-serif: "Nanum Myeongjo", "AppleMyungjo", "Noto Serif KR", serif;
+  --font-serif: var(--font-gowun), "Gowun Batang", "Nanum Myeongjo", "AppleMyungjo", "Noto Serif KR", serif;
 }
 
 html {
@@ -54,29 +58,37 @@ body {
 }
 
 @utility btn {
-  @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl px-5 font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+  @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-xl px-5 font-semibold transition-all disabled:cursor-not-allowed disabled:opacity-50;
 }
 @utility btn-primary {
-  @apply btn bg-accent text-white hover:bg-accent-strong;
+  @apply btn bg-accent-strong text-white hover:bg-accent;
 }
 @utility btn-soft {
-  @apply btn bg-accent-soft text-accent-strong hover:bg-[#ecd6c7];
+  @apply btn bg-accent-soft text-accent-strong hover:bg-[#efdcd2];
 }
 @utility btn-ghost {
-  @apply btn border border-line bg-card text-ink hover:bg-paper;
+  @apply btn border border-line bg-card text-ink hover:border-accent/30 hover:bg-paper;
 }
 @utility btn-danger {
   @apply btn bg-alert text-white hover:opacity-90;
 }
 @utility card {
-  @apply rounded-3xl border border-line bg-card p-5 shadow-[0_1px_2px_rgba(60,40,20,0.04),0_12px_30px_-24px_rgba(53,47,42,0.35)];
+  @apply rounded-xl border border-line bg-card p-5;
 }
 @utility field {
-  @apply w-full rounded-2xl border border-line bg-card px-4 py-3 text-base text-ink placeholder:text-ink-faint focus:border-accent focus:outline-none;
+  @apply w-full rounded-xl border border-line bg-card px-4 py-3 text-base text-ink transition-shadow placeholder:text-ink-faint focus:border-accent focus:shadow-[0_0_0_3px_rgba(140,63,43,0.12)] focus:outline-none;
 }
 @utility label {
   @apply mb-1 block text-sm font-semibold text-ink-soft;
 }
 @utility chip {
-  @apply inline-flex items-center rounded-full border border-line bg-card px-3 py-1 text-sm text-ink-soft;
+  @apply inline-flex items-center gap-1 rounded-full border border-line bg-card px-3.5 py-1 text-sm text-ink-soft transition-colors hover:border-accent/30 hover:text-ink;
+}
+/* 고른 칩 */
+@utility chip-on {
+  @apply border-accent-strong bg-accent-strong text-white hover:text-white;
+}
+/* 카드 안 소제목 */
+@utility section-title {
+  @apply font-serif text-[1.2rem] font-bold text-ink;
 }

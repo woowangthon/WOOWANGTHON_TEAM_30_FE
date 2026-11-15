@@ -12,10 +12,10 @@ export async function signupAndCreateSpace(page: Page, spaceName = "엄마") {
   await page.getByRole("checkbox").check();
   await page.getByRole("button", { name: "가입하기" }).click();
   await expect(page).toHaveURL(/\/spaces$/);
-  await page.getByRole("button", { name: "+ 새 추억 공간 만들기" }).click();
+  // 첫 공간은 만들기 양식이 바로 보인다
   await page.getByLabel("공간 이름").fill(spaceName);
   await page.getByRole("button", { name: "어머니" }).click();
-  await page.getByRole("button", { name: "만들기", exact: true }).click();
+  await page.getByRole("button", { name: "만들고 녹음 올리러 가기" }).click();
   await expect(page).toHaveURL(/\/upload$/);
   return email;
 }

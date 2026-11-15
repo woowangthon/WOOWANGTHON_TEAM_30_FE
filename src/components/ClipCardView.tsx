@@ -4,6 +4,7 @@ import { useState } from "react";
 import { api } from "@/lib/api";
 import type { ClipCard } from "@/lib/api-types.gen";
 import { ClipPlayer } from "./ClipPlayer";
+import { Icon } from "./Icons";
 
 /** 그 사람이 실제로 한 말(원본 녹음) 카드. 자막은 DB에 저장된 원문 그대로다. */
 export function ClipCardView({
@@ -23,14 +24,15 @@ export function ClipCardView({
   return (
     <article className="card space-y-3" aria-label={`${personName}의 녹음`}>
       <p className="flex flex-wrap items-center gap-x-2 text-sm text-ink-faint">
+        <span aria-hidden className="grid h-7 w-7 place-items-center rounded-full bg-accent-soft text-accent-strong"><Icon name="mic" size={15} /></span>
         <span className="font-semibold text-accent-strong">{personName}의 목소리</span>
         <span aria-hidden>·</span>
         <span>{card.source_label}</span>
         {nearby && <span className="rounded-full bg-paper px-2 py-0.5 text-xs">가까운 추억</span>}
       </p>
-      {card.question && <p className="text-sm text-ink-soft">질문: {card.question}</p>}
+      {card.question && <p className="rounded-xl bg-paper px-3 py-2 text-sm text-ink-soft">질문 · {card.question}</p>}
       {card.transcript ? (
-        <blockquote className="font-serif text-lg leading-relaxed text-ink">“{card.transcript}”</blockquote>
+        <blockquote className="font-serif text-[1.15rem] leading-relaxed text-ink">“{card.transcript}”</blockquote>
       ) : (
         <p className="text-ink-faint">자막이 아직 없어요. 들어 보시고 ‘목소리 확인’에서 적을 수 있어요.</p>
       )}
@@ -40,7 +42,7 @@ export function ClipCardView({
           <button
             type="button"
             aria-pressed={fav}
-            className={`min-h-11 rounded-full px-3 text-sm ${fav ? "text-accent-strong" : "text-ink-faint"}`}
+            className={`min-h-11 rounded-full border px-4 text-sm ${fav ? "border-peach/50 bg-peach-soft text-ink" : "border-line text-ink-faint hover:text-ink"}`}
             onClick={async () => {
               const next = !fav;
               setFav(next);
@@ -55,7 +57,7 @@ export function ClipCardView({
           </button>
         )}
       </div>
-      <p className="text-sm text-ink-soft">{card.date_label}</p>
+      <p className="flex items-center gap-1.5 text-sm text-ink-soft"><Icon name="calendar" size={15} />{card.date_label}</p>
       {card.photos.length > 0 && (
         <div>
           <p className="mb-1 text-xs text-ink-faint">같은 날 사진</p>

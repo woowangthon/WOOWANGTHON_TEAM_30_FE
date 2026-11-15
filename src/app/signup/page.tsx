@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { api, errorMessage } from "@/lib/api";
 import { useApi } from "@/lib/hooks";
 import type { AppConfig } from "@/lib/api-types.gen";
-import { Shell, PageTitle } from "@/components/Shell";
+import { AuthFrame } from "@/components/AuthFrame";
 import { ErrorBox, Notice } from "@/components/Feedback";
 
 function SignupForm() {
@@ -64,7 +64,7 @@ function SignupForm() {
         </span>
       </label>
       {error && <ErrorBox message={error} />}
-      <button className="btn-primary w-full" disabled={busy || !agree}>{busy ? "만드는 중…" : "가입하기"}</button>
+      <button className="btn-primary w-full text-[1.05rem]" disabled={busy || !agree}>{busy ? "만드는 중…" : "가입하기"}</button>
       <p className="text-center text-ink-soft">
         이미 계정이 있나요? <Link className="font-semibold text-accent-strong underline underline-offset-4" href="/login">로그인</Link>
       </p>
@@ -74,11 +74,10 @@ function SignupForm() {
 
 export default function SignupPage() {
   return (
-    <Shell back={{ href: "/", label: "처음으로" }}>
-      <PageTitle title="여운 시작하기" sub="소중한 사람의 실제 목소리를 모아 두는 곳이에요." />
+    <AuthFrame back={{ href: "/", label: "처음으로" }} title="여운 시작하기" sub="소중한 사람의 실제 목소리를 모아 두는 곳이에요.">
       <Suspense>
         <SignupForm />
       </Suspense>
-    </Shell>
+    </AuthFrame>
   );
 }

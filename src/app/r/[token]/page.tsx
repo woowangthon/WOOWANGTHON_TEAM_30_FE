@@ -5,6 +5,8 @@ import { useParams } from "next/navigation";
 import { api, ApiError, errorMessage, uploadWithProgress } from "@/lib/api";
 import type { LinkQuestion, RecorderSession } from "@/lib/api-types.gen";
 import { extensionFor, formatClock, pickMimeType } from "@/lib/recorder";
+import { Logo } from "@/components/Icons";
+import { Backdrop } from "@/components/Wave";
 
 type Phase = "loading" | "invalid" | "consent" | "record" | "done";
 type QState = "idle" | "recording" | "recorded" | "sending" | "sent";
@@ -61,7 +63,7 @@ export default function RecorderPage() {
   if (phase === "invalid" || !session)
     return (
       <Frame>
-        <h1 className="text-[1.6em] font-bold">링크를 열 수 없어요</h1>
+        <h1 className="font-serif text-[1.6em] font-bold">링크를 열 수 없어요</h1>
         <p className="mt-4">{error}</p>
       </Frame>
     );
@@ -146,7 +148,7 @@ export default function RecorderPage() {
   if (phase === "done") {
     return (
       <Frame>
-        <h1 className="text-[1.6em] font-bold">고맙습니다</h1>
+        <h1 className="font-serif text-[1.6em] font-bold">고맙습니다</h1>
         <p className="mt-4">
           들려주신 목소리는 {session.sender_name || "보낸 분"}님께 원본 그대로 소중히 전해졌어요. 이제 이 화면을 닫으셔도 돼요.
         </p>
@@ -158,7 +160,7 @@ export default function RecorderPage() {
     return (
       <Frame>
         <p className="text-ink-soft">{session.sender_name || "가족"}님이 보낸 질문이에요</p>
-        <h1 className="mt-2 text-[1.6em] font-bold leading-snug">목소리로 이야기를 남겨 주세요</h1>
+        <h1 className="mt-2 font-serif text-[1.6em] font-bold leading-snug">목소리로 이야기를 남겨 주세요</h1>
         {session.message && <p className="mt-4 rounded-2xl bg-accent-soft p-4">“{session.message}”</p>}
         <p className="mt-4">질문이 {questions.length}개 있어요. 하나씩 천천히 답해 주시면 돼요. 하고 싶지 않은 질문은 넘어가도 괜찮아요.</p>
         <div className="mt-6 rounded-2xl border border-line bg-card p-4 text-[0.85em] leading-relaxed text-ink-soft">
@@ -188,7 +190,7 @@ export default function RecorderPage() {
       <p className="text-ink-soft">
         질문 {index + 1} / {questions.length} · 답한 질문 {doneCount}개
       </p>
-      <h1 className="mt-3 text-[1.5em] font-bold leading-snug">{q?.text}</h1>
+      <h1 className="mt-3 font-serif text-[1.5em] font-bold leading-snug">{q?.text}</h1>
       {answered[q?.id || ""] && qstate === "idle" && <p className="mt-2 text-sage">이미 답하신 질문이에요. 다시 녹음하면 새 녹음으로 바뀌어요.</p>}
 
       <div className="mt-8 flex flex-col items-center gap-4">
@@ -203,7 +205,7 @@ export default function RecorderPage() {
             <p className="text-[1.6em] font-bold tabular-nums" aria-live="polite">
               {formatClock(seconds)}
             </p>
-            <button onClick={stopRecording} className="flex h-40 w-40 animate-pulse flex-col items-center justify-center rounded-full bg-ink text-white shadow-lg" aria-label="녹음 멈추기">
+            <button onClick={stopRecording} className="flex h-40 w-40 animate-pulse flex-col items-center justify-center rounded-full bg-alert text-white shadow-lg" aria-label="녹음 멈추기">
               <span className="text-[2em]" aria-hidden>■</span>
               <span className="font-bold">다 말했어요</span>
             </button>
@@ -243,9 +245,12 @@ export default function RecorderPage() {
 
 function Frame({ children }: { children: React.ReactNode }) {
   return (
-    <main className="mx-auto min-h-dvh max-w-xl px-5 py-10 text-[1.25rem] leading-relaxed">
-      <p className="mb-6 font-serif text-[1.1em] font-bold text-accent-strong">여운</p>
-      {children}
-    </main>
+    <div className="relative isolate min-h-dvh">
+      <Backdrop />
+      <main className="mx-auto max-w-xl px-5 py-10 text-[1.25rem] leading-relaxed">
+        <Logo className="mb-8" />
+        <div className="rounded-[1.6rem] border border-line bg-card/95 p-6 sm:p-8">{children}</div>
+      </main>
+    </div>
   );
 }

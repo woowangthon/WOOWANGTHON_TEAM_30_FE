@@ -42,7 +42,7 @@ export function Slideshow({ photos, clips, personName, onClose }: { photos: Phot
   const photo = photos[photoIdx];
   const clip = clips[clipIdx];
   return (
-    <div role="dialog" aria-modal="true" aria-label="사진과 함께 듣기" className="fixed inset-0 z-50 flex flex-col bg-[#1d1a17] text-white">
+    <div role="dialog" aria-modal="true" aria-label="사진과 함께 듣기" className="fixed inset-0 z-50 flex flex-col bg-[#16181d] text-white">
       <div className="flex items-center justify-between p-4">
         <span className="text-sm text-white/70">사진과 함께 듣기</span>
         <button onClick={onClose} className="min-h-11 rounded-full bg-white/10 px-4">닫기</button>
@@ -59,7 +59,7 @@ export function Slideshow({ photos, clips, personName, onClose }: { photos: Phot
         {photo?.caption && <p className="text-sm text-white/60">{photo.caption}</p>}
         {clip && (
           <>
-            <p className="text-sm text-[#e9c9b4]">
+            <p className="text-sm text-[#f0cdb8]">
               {personName}의 목소리 · {clip.source_label} {clip.audio_status === "placeholder" ? "· 샘플 녹음 준비 중" : ""}
             </p>
             <p className="font-serif text-xl leading-relaxed">“{clip.transcript}”</p>

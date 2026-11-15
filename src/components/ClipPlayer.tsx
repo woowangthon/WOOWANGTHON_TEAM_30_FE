@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { AudioStatus } from "@/lib/api-types.gen";
+import { Icon } from "./Icons";
 
 // 한 번에 하나만 재생한다
 let currentAudio: HTMLAudioElement | null = null;
@@ -32,8 +33,8 @@ export function ClipPlayer({ url, status, label = "듣기", size = "md", onEnded
 
   if (status === "placeholder") {
     return (
-      <span className="inline-flex min-h-11 items-center gap-2 rounded-full bg-paper px-4 text-sm text-ink-faint">
-        <span aria-hidden>🎙</span> 샘플 녹음 준비 중
+      <span className="inline-flex min-h-11 items-center gap-2 rounded-full border border-dashed border-line bg-paper px-4 text-sm text-ink-faint">
+        <Icon name="mic" size={16} /> 샘플 녹음 준비 중
       </span>
     );
   }
@@ -77,17 +78,17 @@ export function ClipPlayer({ url, status, label = "듣기", size = "md", onEnded
         type="button"
         onClick={toggle}
         aria-pressed={playing}
-        className={`relative inline-flex items-center gap-2 overflow-hidden rounded-full font-semibold transition-colors ${
-          big ? "min-h-14 px-6 text-lg" : "min-h-11 px-4"
-        } ${playing ? "bg-accent text-white" : "bg-accent-soft text-accent-strong hover:bg-[#ecd6c7]"}`}
+        className={`relative inline-flex items-center gap-2.5 overflow-hidden rounded-full font-semibold transition-colors ${
+          big ? "min-h-13 py-1.5 pl-1.5 pr-5 text-[1.05rem]" : "min-h-11 py-1 pl-1 pr-4"
+        } ${playing ? "bg-accent-strong text-white" : "bg-accent-soft text-accent-strong hover:bg-[#efdcd2]"}`}
       >
         <span
           aria-hidden
           className="absolute inset-y-0 left-0 bg-black/10"
           style={{ width: `${Math.round(progress * 100)}%` }}
         />
-        <span className="relative" aria-hidden>
-          {playing ? "❚❚" : "▶"}
+        <span aria-hidden className={`relative grid place-items-center rounded-full ${big ? "h-10 w-10" : "h-9 w-9"} ${playing ? "bg-white/20" : "bg-accent text-white"}`}>
+          <Icon name={playing ? "pause" : "play"} size={15} className={playing ? "" : "translate-x-[1px]"} />
         </span>
         <span className="relative">{playing ? "멈추기" : label}</span>
       </button>

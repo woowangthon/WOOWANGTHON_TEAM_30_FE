@@ -52,7 +52,7 @@ function NewLink({ spaceId, onCreated }: { spaceId: string; onCreated: (l: Recor
   return (
     <section className="card space-y-5">
       <div>
-        <h2 className="font-semibold">1. 질문 고르기 ({total}/20)</h2>
+        <h2 className="section-title">1. 질문 고르기 ({total}/20)</h2>
         <p className="text-sm text-ink-soft">부모님이 편하게 이야기할 수 있는 질문을 몇 개만 골라 보세요. 처음엔 3~5개가 좋아요.</p>
       </div>
       <div className="-mx-1 flex flex-wrap gap-2" role="tablist" aria-label="질문 묶음">
@@ -117,7 +117,7 @@ function NewLink({ spaceId, onCreated }: { spaceId: string; onCreated: (l: Recor
         </div>
       )}
       <div className="space-y-3">
-        <h2 className="font-semibold">2. 녹음하는 분께 보일 말</h2>
+        <h2 className="section-title">2. 녹음하는 분께 보일 말</h2>
         <div>
           <label className="label" htmlFor="sender">보내는 사람</label>
           <input id="sender" className="field" maxLength={40} value={sender} onChange={(e) => setSender(e.target.value)} placeholder={me.data?.display_name || "예: 막내딸 지은"} />
@@ -148,7 +148,7 @@ function NewLinkResult({ link }: { link: RecordingLink }) {
   const url = link.url || "";
   return (
     <section className="card space-y-3 border-sage/40 bg-sage-soft" aria-live="polite">
-      <h2 className="font-semibold text-sage">링크를 만들었어요</h2>
+      <h2 className="section-title text-accent-strong">링크를 만들었어요</h2>
       <p className="text-[0.95rem]">이 링크는 지금 한 번만 보여요. 복사해서 카카오톡이나 문자로 보내 주세요. 받은 분은 로그인 없이 큰 글씨 화면에서 녹음할 수 있어요.</p>
       <input readOnly className="field font-mono text-sm" value={url} onFocus={(e) => e.currentTarget.select()} aria-label="녹음 링크" />
       <div className="flex flex-wrap gap-2">
@@ -206,7 +206,7 @@ export default function AheadPage() {
       />
       {links.data && links.data.links.length > 0 && (
         <section className="space-y-3">
-          <h2 className="font-semibold">보낸 링크</h2>
+          <h2 className="section-title">보낸 링크</h2>
           <ul className="space-y-3">
             {links.data.links.map((l) => (
               <li key={l.id} className="card">
