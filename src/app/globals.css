@@ -1,25 +1,28 @@
 @import "tailwindcss";
 
-/* 여운 — 차분하고 따뜻한 색. 그 사람의 말(원본)과 여운 안내(서비스의 말)를 색으로도 구분한다. */
+/* 여운 — 크림 종이 위의 올리브 초록. 그 사람의 말(원본)과 여운 안내(서비스의 말)를 색으로도 구분한다. */
 @theme {
-  --color-paper: #fbf7f1;
-  --color-card: #ffffff;
-  --color-ink: #352f2a;
-  --color-ink-soft: #6b6159;
-  --color-ink-faint: #998e84;
-  --color-line: #e8dfd4;
-  --color-accent: #9c5f45;
-  --color-accent-strong: #84492f;
-  --color-accent-soft: #f4e6dc;
-  --color-sage: #5f7b66;
-  --color-sage-soft: #e5eee6;
+  --color-paper: #f8f4ee;
+  --color-paper-deep: #f2ece3;
+  --color-card: #fffdf9;
+  --color-ink: #2f2b26;
+  --color-ink-soft: #645c53;
+  --color-ink-faint: #9a9086;
+  --color-line: #e9e1d6;
+  --color-accent: #5e7148;
+  --color-accent-strong: #3f5232;
+  --color-accent-soft: #ebeedf;
+  --color-peach: #e7a88a;
+  --color-peach-soft: #f8e6dc;
+  --color-sage: #6f8462;
+  --color-sage-soft: #e8eddf;
   --color-guide: #50607e;
   --color-guide-soft: #eaeef5;
   --color-alert: #a3402e;
   --color-alert-soft: #fbe9e4;
   --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
     "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif;
-  --font-serif: "Nanum Myeongjo", "AppleMyungjo", "Noto Serif KR", serif;
+  --font-serif: var(--font-gowun), "Gowun Batang", "Nanum Myeongjo", "AppleMyungjo", "Noto Serif KR", serif;
 }
 
 html {
@@ -60,7 +63,7 @@ body {
   @apply btn bg-accent text-white hover:bg-accent-strong;
 }
 @utility btn-soft {
-  @apply btn bg-accent-soft text-accent-strong hover:bg-[#ecd6c7];
+  @apply btn bg-accent-soft text-accent-strong hover:bg-[#dfe5cf];
 }
 @utility btn-ghost {
   @apply btn border border-line bg-card text-ink hover:bg-paper;
@@ -69,7 +72,7 @@ body {
   @apply btn bg-alert text-white hover:opacity-90;
 }
 @utility card {
-  @apply rounded-3xl border border-line bg-card p-5 shadow-[0_1px_2px_rgba(60,40,20,0.04),0_12px_30px_-24px_rgba(53,47,42,0.35)];
+  @apply rounded-[1.25rem] border border-line bg-card p-5 shadow-[0_1px_2px_rgba(60,40,20,0.04),0_14px_34px_-26px_rgba(53,47,42,0.4)];
 }
 @utility field {
   @apply w-full rounded-2xl border border-line bg-card px-4 py-3 text-base text-ink placeholder:text-ink-faint focus:border-accent focus:outline-none;

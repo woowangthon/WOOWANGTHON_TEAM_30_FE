@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Wave } from "@/components/Wave";
+import { Logo } from "@/components/Icons";
 
 const PROMISES = [
   { title: "원본이 먼저", body: "녹음에 그대로 있는 말이면 언제나 실제 목소리를 먼저 들려 드려요. 그분의 목소리를 합성하지 않아요." },
@@ -63,10 +64,10 @@ export default function Home() {
     <div className="relative isolate min-h-dvh overflow-x-hidden">
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[46rem] bg-[radial-gradient(60rem_30rem_at_15%_-10%,var(--color-accent-soft),transparent_70%),radial-gradient(40rem_28rem_at_95%_10%,var(--color-sage-soft),transparent_70%)]" />
       <header className="mx-auto flex h-16 max-w-5xl items-center px-5">
-        <span className="font-serif text-2xl font-bold">여운</span>
+        <Logo />
         <nav className="ml-auto flex gap-2 text-[0.95rem]">
           <Link href="/login" className="rounded-full px-3 py-2 text-ink-soft hover:text-ink">로그인</Link>
-          <Link href="/signup" className="rounded-full bg-ink px-4 py-2 text-paper">시작하기</Link>
+          <Link href="/signup" className="rounded-full bg-accent-strong px-4 py-2 font-semibold text-white hover:bg-accent">시작하기</Link>
         </nav>
       </header>
       <main className="mx-auto max-w-5xl px-5 pb-20">

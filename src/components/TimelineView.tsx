@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useApi } from "@/lib/hooks";
+import { useSpace } from "@/lib/space-context";
 import type { ClipCard, PhotoRef, Space, Timeline, TimelineItem } from "@/lib/api-types.gen";
 import { ClipCardView } from "./ClipCardView";
 import { Slideshow } from "./Slideshow";
@@ -41,9 +43,23 @@ function onThisDayTitle(items: TimelineItem[]): string {
   return diff > 0 ? `${diff}년 전 오늘` : "예전 오늘";
 }
 
+function matches(i: TimelineItem, q: string): boolean {
+  const t = (i.clip?.transcript || i.photo?.caption || "").toLowerCase();
+  return t.includes(q.toLowerCase());
+}
+
 export function TimelineView({ space, canFavorite }: { space: Space; canFavorite: boolean }) {
-  const [tag, setTag] = useState<string | null>(null);
+  const params = useSearchParams();
+  const router = useRouter();
+  const { base } = useSpace();
+  const paramTag = params.get("tag");
+  const query = params.get("q")?.trim() || "";
+  const [tag, setTag] = useState<string | null>(paramTag);
   const [favorites, setFavorites] = useState(false);
+  // 홈의 주제 카드나 위쪽 검색에서 넘어오면 그 주제로 맞춘다
+  useEffect(() => {
+    setTag(paramTag);
+  }, [paramTag]);
   const qs = new URLSearchParams();
   if (tag) qs.set("tag", tag);
   if (favorites) qs.set("favorites", "true");
@@ -51,10 +67,19 @@ export function TimelineView({ space, canFavorite }: { space: Space; canFavorite
   const [allTags, setAllTags] = useState<[string, number][]>([]);
   const [show, setShow] = useState<{ photos: PhotoRef[]; clips: ClipCard[] } | null>(null);
   const [note, setNote] = useState("");
-  // 주제 칩은 필터를 걸지 않은 첫 응답의 태그 개수로 만든다
+  const days = useMemo(() => {
+    if (!tl.data) return undefined;
+    if (!query) return tl.data.days;
+    return tl.data.days.map((d) => ({ ...d, items: d.items.filter((i) => matches(i, query)) })).filter((d) => d.items.length > 0);
+  }, [tl.data, query]);
+  const found = days?.reduce((n, d) => n + d.items.length, 0) ?? 0;
+  // 주제 칩은 필터를 걸지 않은 응답의 태그 개수로 만든다.
+  // 주제를 고른 채로 들어왔으면(홈의 주제 카드) 필터 없는 목록을 한 번 따로 받는다.
+  const unfiltered = useApi<Timeline>(allTags.length === 0 && (tag || favorites) ? `/spaces/${space.id}/timeline` : null);
   useEffect(() => {
-    if (tl.data && !tag && !favorites) setAllTags(Object.entries(tl.data.tag_counts).slice(0, 14));
-  }, [tl.data, tag, favorites]);
+    const src = !tag && !favorites ? tl.data : unfiltered.data;
+    if (src) setAllTags(Object.entries(src.tag_counts).slice(0, 14));
+  }, [tl.data, unfiltered.data, tag, favorites]);
 
   return (
     <div className="space-y-6">
@@ -64,7 +89,17 @@ export function TimelineView({ space, canFavorite }: { space: Space; canFavorite
           <button className="underline underline-offset-4" onClick={() => void tl.reload()}>새로 고침</button>
         </p>
       )}
-      {tl.data && tl.data.on_this_day.length > 0 && !tag && !favorites && (
+      {query && (
+        <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-accent/25 bg-accent-soft px-4 py-3 text-[0.95rem]" role="status">
+          <span>
+            <b className="font-semibold text-accent-strong">‘{query}’</b> 검색 결과 {tl.data ? `${found}개` : "찾는 중"}
+          </span>
+          <button className="ml-auto text-sm text-ink-soft underline underline-offset-4" onClick={() => router.replace(`${base}/timeline`)}>
+            검색 지우기
+          </button>
+        </div>
+      )}
+      {tl.data && tl.data.on_this_day.length > 0 && !tag && !favorites && !query && (
         <section className="rounded-3xl border border-accent/30 bg-accent-soft p-4" aria-labelledby="otd">
           <h2 id="otd" className="mb-3 font-serif text-lg font-bold text-accent-strong">
             {onThisDayTitle(tl.data.on_this_day)}
@@ -96,6 +131,9 @@ export function TimelineView({ space, canFavorite }: { space: Space; canFavorite
       </div>
       {tl.error && <ErrorBox message={tl.error.messageKo} onRetry={tl.reload} />}
       {tl.loading && !tl.data && <Spinner />}
+      {tl.data && query && found === 0 && tl.data.total > 0 && (
+        <Empty title="그 말이 들어간 녹음을 찾지 못했어요">다른 낱말로 찾아보거나, 기억 대화에서 물어보세요.</Empty>
+      )}
       {tl.data && tl.data.total === 0 && (
         <Empty title={favorites ? "즐겨찾기한 녹음이 아직 없어요" : "아직 보여 드릴 추억이 없어요"}>
           {favorites ? "대화나 타임라인에서 ☆를 눌러 모아 보세요." : "자료를 올리고 목소리를 확인하면 여기에 날짜별로 모여요."}
@@ -120,12 +158,12 @@ export function TimelineView({ space, canFavorite }: { space: Space; canFavorite
         </button>
       )}
       {note && <p className="text-sm text-sage" role="status">{note}</p>}
-      {tl.data?.days.map((d) => {
+      {days?.map((d) => {
         const photos = d.items.filter((i) => i.photo).map((i) => i.photo!);
         const clips = d.items.filter((i) => i.clip).map((i) => i.clip!);
         return (
           <section key={d.date || "unknown"} aria-label={d.label}>
-            <h3 className="sticky top-14 z-10 -mx-4 flex items-center gap-2 bg-paper/95 px-4 py-2 font-semibold text-ink-soft backdrop-blur">
+            <h3 className="sticky top-[7.4rem] z-10 lg:top-[5.5rem] -mx-4 flex items-center gap-2 bg-paper/95 px-4 py-2 font-semibold text-ink-soft backdrop-blur">
               {d.label}
               {photos.length > 0 && clips.length > 0 && (
                 <button className="ml-auto rounded-full bg-accent-soft px-3 py-1 text-sm text-accent-strong" onClick={() => setShow({ photos, clips })}>

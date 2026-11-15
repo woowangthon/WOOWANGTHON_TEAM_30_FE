@@ -79,7 +79,7 @@ export function ClipPlayer({ url, status, label = "듣기", size = "md", onEnded
         aria-pressed={playing}
         className={`relative inline-flex items-center gap-2 overflow-hidden rounded-full font-semibold transition-colors ${
           big ? "min-h-14 px-6 text-lg" : "min-h-11 px-4"
-        } ${playing ? "bg-accent text-white" : "bg-accent-soft text-accent-strong hover:bg-[#ecd6c7]"}`}
+        } ${playing ? "bg-accent text-white" : "bg-accent-soft text-accent-strong hover:bg-[#dfe5cf]"}`}
       >
         <span
           aria-hidden
