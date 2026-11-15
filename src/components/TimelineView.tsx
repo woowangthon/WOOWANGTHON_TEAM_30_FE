@@ -11,6 +11,7 @@ import { Slideshow } from "./Slideshow";
 import { api, errorMessage } from "@/lib/api";
 import type { Collection } from "@/lib/api-types.gen";
 import { Empty, ErrorBox, Spinner } from "./Feedback";
+import { Icon } from "./Icons";
 
 function Items({ items, space, canFavorite }: { items: TimelineItem[]; space: Space; canFavorite: boolean }) {
   const photos = items.filter((i) => i.kind === "photo" && i.photo).map((i) => i.photo!);
@@ -100,7 +101,7 @@ export function TimelineView({ space, canFavorite }: { space: Space; canFavorite
         </div>
       )}
       {tl.data && tl.data.on_this_day.length > 0 && !tag && !favorites && !query && (
-        <section className="rounded-3xl border border-accent/30 bg-accent-soft p-4" aria-labelledby="otd">
+        <section className="rounded-[1.4rem] border border-peach/40 bg-peach-soft/60 p-5" aria-labelledby="otd">
           <h2 id="otd" className="mb-3 font-serif text-lg font-bold text-accent-strong">
             {onThisDayTitle(tl.data.on_this_day)}
           </h2>
@@ -109,7 +110,7 @@ export function TimelineView({ space, canFavorite }: { space: Space; canFavorite
       )}
       <div className="-mx-4 overflow-x-auto px-4" role="toolbar" aria-label="주제로 보기">
         <div className="flex gap-2 whitespace-nowrap">
-          <button className={`chip min-h-10 ${!tag && !favorites ? "border-ink bg-ink text-paper" : ""}`} onClick={() => { setTag(null); setFavorites(false); }}>
+          <button className={`chip min-h-10 ${!tag && !favorites ? "chip-on" : ""}`} onClick={() => { setTag(null); setFavorites(false); }}>
             전체
           </button>
           {canFavorite && !space.is_sample && (
@@ -118,12 +119,12 @@ export function TimelineView({ space, canFavorite }: { space: Space; canFavorite
             </Link>
           )}
           {canFavorite && (
-            <button className={`chip min-h-10 ${favorites ? "border-ink bg-ink text-paper" : ""}`} onClick={() => { setFavorites(!favorites); setTag(null); }} aria-pressed={favorites}>
+            <button className={`chip min-h-10 ${favorites ? "chip-on" : ""}`} onClick={() => { setFavorites(!favorites); setTag(null); }} aria-pressed={favorites}>
               ★ 즐겨찾기
             </button>
           )}
           {allTags.map(([t, n]) => (
-            <button key={t} className={`chip min-h-10 ${tag === t ? "border-ink bg-ink text-paper" : ""}`} onClick={() => { setTag(tag === t ? null : t); setFavorites(false); }} aria-pressed={tag === t}>
+            <button key={t} className={`chip min-h-10 ${tag === t ? "chip-on" : ""}`} onClick={() => { setTag(tag === t ? null : t); setFavorites(false); }} aria-pressed={tag === t}>
               {t} <span className="ml-1 text-xs opacity-70">{n}</span>
             </button>
           ))}
@@ -163,7 +164,8 @@ export function TimelineView({ space, canFavorite }: { space: Space; canFavorite
         const clips = d.items.filter((i) => i.clip).map((i) => i.clip!);
         return (
           <section key={d.date || "unknown"} aria-label={d.label}>
-            <h3 className="sticky top-[7.4rem] z-10 lg:top-[5.5rem] -mx-4 flex items-center gap-2 bg-paper/95 px-4 py-2 font-semibold text-ink-soft backdrop-blur">
+            <h3 className="sticky top-[7.4rem] z-10 -mx-4 mb-1 flex items-center gap-2 bg-paper/90 px-4 py-2.5 font-serif text-[1.05rem] font-bold text-ink backdrop-blur lg:top-[5.5rem]">
+              <Icon name="calendar" size={17} className="text-accent" />
               {d.label}
               {photos.length > 0 && clips.length > 0 && (
                 <button className="ml-auto rounded-full bg-accent-soft px-3 py-1 text-sm text-accent-strong" onClick={() => setShow({ photos, clips })}>

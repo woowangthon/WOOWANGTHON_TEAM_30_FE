@@ -10,6 +10,9 @@ import { CareCard } from "./CareCard";
 import { ClipPlayer } from "./ClipPlayer";
 import { MicButton } from "./MicButton";
 import { ErrorBox } from "./Feedback";
+import { Icon } from "./Icons";
+
+const STARTERS = ["보고 싶어", "오늘 면접 보고 왔어", "밥은 먹었어?", "요즘 힘들어"];
 
 interface Turn {
   id: string;
@@ -92,20 +95,32 @@ export function ChatView({ space }: { space: Space; canFavorite?: boolean }) {
 
   return (
     <div className="flex flex-col gap-4">
-      <p className="rounded-2xl border border-line bg-card px-4 py-3 text-sm text-ink-soft" role="note">
+      <p className="flex items-start gap-3 rounded-2xl border border-line bg-card/80 px-4 py-3 text-sm text-ink-soft" role="note">
+        <Icon name="mic" size={18} className="mt-0.5 shrink-0 text-accent" />
+        <span>
         {person}의 실제 녹음으로 이어 가는 대화예요. 녹음에 그대로 있는 말은 <b className="text-accent-strong">▶ 실제 목소리</b>로, 녹음에 없는 말은{" "}
         <b className="text-guide">AI가 만든 말</b>로 표시하고 근거 녹음을 함께 보여 드려요.
+        </span>
       </p>
 
       {turns.length === 0 && (
-        <PersonBubble person={person}>
-          <p className="text-ink-soft">{person}에게 하고 싶은 말을 보내 보세요.</p>
-        </PersonBubble>
+        <>
+          <PersonBubble person={person}>
+            <p className="text-ink-soft">{person}에게 하고 싶은 말을 보내 보세요.</p>
+          </PersonBubble>
+          <div className="flex flex-wrap gap-2 pl-11" aria-label="이렇게 말을 걸어 보세요">
+            {STARTERS.map((s) => (
+              <button key={s} type="button" className="chip min-h-10" onClick={() => void send(s)} disabled={busy}>
+                {s}
+              </button>
+            ))}
+          </div>
+        </>
       )}
 
       {turns.map((t) => (
         <section key={t.id} className="space-y-3" aria-label="대화">
-          <p className="ml-auto w-fit max-w-[85%] rounded-2xl rounded-br-md bg-ink px-4 py-3 text-paper">{t.message}</p>
+          <p className="ml-auto w-fit max-w-[85%] rounded-2xl rounded-br-md bg-accent-strong px-4 py-3 text-white shadow-[0_10px_22px_-16px_rgba(63,82,50,0.9)]">{t.message}</p>
           {t.error && <ErrorBox message={t.error} onRetry={() => send(t.message)} />}
           {t.response && <Reply r={t.response} person={person} />}
         </section>
@@ -121,7 +136,7 @@ export function ChatView({ space }: { space: Space; canFavorite?: boolean }) {
       <div ref={bottom} />
 
       <form
-        className="sticky bottom-3 z-30 flex items-end gap-2 rounded-3xl border border-line bg-card p-2 shadow-lg"
+        className="sticky bottom-3 z-30 flex items-end gap-2 rounded-[1.4rem] border border-line bg-card p-2 shadow-[0_20px_44px_-24px_rgba(53,47,42,0.55)] focus-within:border-accent/50"
         onSubmit={(e) => {
           e.preventDefault();
           void send(text);
@@ -146,7 +161,8 @@ export function ChatView({ space }: { space: Space; canFavorite?: boolean }) {
           className="max-h-40 min-h-14 flex-1 resize-none rounded-2xl px-3 py-3 text-lg focus:outline-none"
         />
         {config.data?.stt_available && <MicButton spaceId={space.id} onText={(v) => setText((x) => (x ? `${x} ${v}` : v))} />}
-        <button className="btn-primary h-14" disabled={busy || !text.trim()}>
+        <button className="btn-primary h-14 rounded-2xl" disabled={busy || !text.trim()}>
+          <Icon name="send" size={18} />
           보내기
         </button>
       </form>
@@ -168,14 +184,14 @@ function PersonBubble({ person, children, dashed }: { person: string; children: 
     <div className="flex items-start gap-2">
       <span
         aria-hidden
-        className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent-soft font-semibold text-accent-strong"
+        className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-peach-soft to-accent-soft font-serif font-bold text-accent-strong"
       >
         {person.slice(0, 1)}
       </span>
       <div className="min-w-0 max-w-[85%] space-y-1">
         <p className="text-xs text-ink-faint">{person}</p>
         <div
-          className={`space-y-2 rounded-2xl rounded-tl-md bg-card px-4 py-3 ${
+          className={`space-y-2 rounded-2xl rounded-tl-md bg-card px-4 py-3 shadow-[0_12px_28px_-24px_rgba(53,47,42,0.6)] ${
             dashed ? "border-2 border-dashed border-guide/40" : "border border-line"
           }`}
         >

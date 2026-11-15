@@ -90,7 +90,7 @@ export default function UploadPage() {
   return (
     <div className="space-y-6">
       <section className="card space-y-4">
-        <h2 className="font-semibold">자료 올리기</h2>
+        <h2 className="section-title">자료 올리기</h2>
         <p className="text-[0.95rem] text-ink-soft">
           통화 녹음·음성 메시지(m4a, mp3, wav, aac, amr, ogg), 영상(mp4, mov), 사진(jpg, png, heic)을 여러 개 한 번에 올릴 수 있어요. 파일 하나는 {maxMb}MB까지예요.
         </p>

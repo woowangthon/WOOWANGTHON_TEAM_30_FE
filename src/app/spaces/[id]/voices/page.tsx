@@ -39,7 +39,7 @@ function RoleButtons({
             speaker.role === o.role && o.role !== "unknown"
               ? o.role === "person"
                 ? "border-sage bg-sage text-white"
-                : "border-ink bg-ink text-paper"
+                : "chip-on"
               : "border-line bg-card text-ink hover:bg-paper"
           }`}
         >

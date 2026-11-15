@@ -28,18 +28,23 @@ function StepIcon({ name }: { name: string }) {
 
 function ChatPreview() {
   return (
-    <div className="relative isolate mx-auto w-full max-w-sm">
-      <div aria-hidden="true" className="absolute -inset-6 -z-10 rounded-[2.5rem] bg-gradient-to-br from-accent-soft via-paper to-sage-soft blur-2xl" />
-      <figure className="rounded-[2rem] border border-line bg-card/95 p-5 shadow-[0_20px_50px_-25px_rgba(53,47,42,0.45)]">
+    <div className="relative isolate mx-auto w-full max-w-md lg:max-w-none">
+      <div aria-hidden="true" className="absolute inset-0 -z-10 overflow-hidden rounded-[2.2rem] border border-line shadow-[0_30px_60px_-40px_rgba(53,47,42,0.6)]">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/images/landing-hero.webp" alt="" className="h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#f6efe4]/30 to-[#2f2b26]/10" />
+      </div>
+      <figure className="mx-auto max-w-sm translate-y-0 p-5 sm:p-8 lg:ml-auto lg:mr-8">
+        <div className="rounded-[1.8rem] border border-white/70 bg-card/92 p-5 shadow-[0_24px_50px_-25px_rgba(53,47,42,0.55)] backdrop-blur">
         <figcaption className="flex items-center gap-3 border-b border-line pb-3">
-          <span className="grid h-10 w-10 place-items-center rounded-full bg-accent-soft font-serif text-lg font-bold text-accent-strong">김</span>
+          <span className="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-peach-soft to-accent-soft font-serif text-lg font-bold text-accent-strong">김</span>
           <span>
             <span className="block font-semibold">김순자 할머니</span>
             <span className="block text-xs text-ink-faint">예시 화면 · 가상 인물</span>
           </span>
         </figcaption>
         <div className="mt-4 space-y-3 text-[0.95rem]">
-          <p className="ml-auto w-fit max-w-[80%] rounded-2xl rounded-br-md bg-ink px-4 py-2 text-paper">할매 보고 싶어</p>
+          <p className="ml-auto w-fit max-w-[80%] rounded-2xl rounded-br-md bg-accent-strong px-4 py-2 text-white">할매 보고 싶어</p>
           <div className="max-w-[90%] rounded-2xl rounded-bl-md border border-line bg-paper px-4 py-3">
             <p className="font-serif leading-relaxed">우리 강아지 얼굴 본 지가 언제고. 보고 싶어서 자꾸 눈에 밟힌다.</p>
             <div className="mt-2 flex items-center gap-2 rounded-full bg-accent-soft px-3 py-1.5 text-accent-strong">
@@ -47,12 +52,13 @@ function ChatPreview() {
               <Wave className="h-4 w-24" />
             </div>
           </div>
-          <p className="ml-auto w-fit max-w-[80%] rounded-2xl rounded-br-md bg-ink px-4 py-2 text-paper">오늘 면접 보고 왔어</p>
+          <p className="ml-auto w-fit max-w-[80%] rounded-2xl rounded-br-md bg-accent-strong px-4 py-2 text-white">오늘 면접 보고 왔어</p>
           <div className="max-w-[90%] rounded-2xl rounded-bl-md border border-dashed border-guide/40 bg-card px-4 py-3">
             <span className="inline-block rounded-full bg-guide-soft px-2 py-0.5 text-xs font-semibold text-guide">AI가 만든 말</span>
             <p className="mt-1 leading-relaxed">아이고 우리 강아지, 고생 많았제. 따신 밥 한 그릇 꼭 챙겨 묵어라.</p>
             <p className="mt-1 text-xs text-ink-faint">근거 녹음 2개 보기</p>
           </div>
+        </div>
         </div>
       </figure>
     </div>
@@ -63,18 +69,18 @@ export default function Home() {
   return (
     <div className="relative isolate min-h-dvh overflow-x-hidden">
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[46rem] bg-[radial-gradient(60rem_30rem_at_15%_-10%,var(--color-accent-soft),transparent_70%),radial-gradient(40rem_28rem_at_95%_10%,var(--color-sage-soft),transparent_70%)]" />
-      <header className="mx-auto flex h-16 max-w-5xl items-center px-5">
+      <header className="mx-auto flex h-20 max-w-6xl items-center px-5">
         <Logo />
         <nav className="ml-auto flex gap-2 text-[0.95rem]">
           <Link href="/login" className="rounded-full px-3 py-2 text-ink-soft hover:text-ink">로그인</Link>
           <Link href="/signup" className="rounded-full bg-accent-strong px-4 py-2 font-semibold text-white hover:bg-accent">시작하기</Link>
         </nav>
       </header>
-      <main className="mx-auto max-w-5xl px-5 pb-20">
-        <section className="grid items-center gap-12 py-12 sm:py-16 lg:grid-cols-[1.15fr_1fr]">
+      <main className="mx-auto max-w-6xl px-5 pb-20">
+        <section className="grid items-center gap-10 py-10 sm:py-14 lg:grid-cols-[1fr_1.05fr] lg:gap-14">
           <div>
-          <p className="text-accent-strong">소중한 사람의 실제 목소리로 남기는 추억</p>
-          <h1 className="mt-3 font-serif text-[1.7rem] font-bold leading-tight sm:text-[2.6rem] lg:text-[2.2rem]">
+          <p className="inline-flex items-center gap-2 rounded-lg bg-accent-soft px-3 py-1.5 text-sm font-medium text-accent-strong"><StepIcon name="ear" /> 소중한 사람의 실제 목소리로 남기는 추억</p>
+          <h1 className="mt-5 font-serif text-[1.7rem] font-bold leading-tight sm:text-[2.6rem] lg:text-[2.2rem]">
             <span className="block text-balance">그분이 남긴 말은 그 목소리 그대로,</span>
             <span className="block text-balance">없는 말은 ‘AI가 만든 말’로 표시해요.</span>
           </h1>
@@ -91,37 +97,43 @@ export default function Home() {
         </section>
 
         <section aria-labelledby="how" className="py-8">
-          <h2 id="how" className="font-serif text-2xl font-bold">이렇게 써요</h2>
+          <h2 id="how" className="border-l-[3px] border-accent pl-4 font-serif text-[1.75rem] font-bold">이렇게 써요</h2>
           <ol className="mt-5 grid gap-4 sm:grid-cols-3">
             {STEPS.map((s, i) => (
-              <li key={s.title} className="card">
-                <span className="flex items-center gap-2 text-sm font-semibold text-accent-strong">
-                  <span className="grid h-9 w-9 place-items-center rounded-full bg-accent-soft"><StepIcon name={s.icon} /></span>
-                  {i + 1}
-                </span>
-                <p className="mt-1 text-lg font-semibold">{s.title}</p>
-                <p className="mt-1 text-ink-soft">{s.body}</p>
+              <li key={s.title} className="card relative overflow-hidden p-6">
+                <span aria-hidden className="absolute -right-2 -top-4 font-serif text-[5.5rem] font-bold leading-none text-accent/10">{i + 1}</span>
+                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-accent-soft text-accent-strong"><StepIcon name={s.icon} /></span>
+                <p className="mt-4 font-serif text-xl font-bold">{s.title}</p>
+                <p className="mt-2 text-ink-soft">{s.body}</p>
               </li>
             ))}
           </ol>
         </section>
 
         <section aria-labelledby="ahead" className="py-8">
-          <div className="card bg-sage-soft">
-            <h2 id="ahead" className="font-serif text-xl font-bold text-sage">부모님 목소리, 미리 남겨 두기</h2>
-            <p className="mt-2 text-ink-soft">
+          <div className="grid overflow-hidden rounded-[1.6rem] border border-line bg-accent-soft/70 shadow-[0_22px_48px_-34px_rgba(53,47,42,0.55)] md:grid-cols-[1.1fr_1fr]">
+            <div className="p-7 sm:p-9">
+            <span className="inline-flex items-center gap-2 rounded-lg bg-card/80 px-3 py-1 text-sm text-accent-strong">질문 카드 72개</span>
+            <h2 id="ahead" className="mt-3 font-serif text-[1.6rem] font-bold text-accent-strong">부모님 목소리, 미리 남겨 두기</h2>
+            <p className="mt-3 text-ink-soft">
               “어릴 때 살던 동네는 어땠어요?” 같은 질문 카드를 골라 링크를 보내면, 부모님은 로그인 없이 큰 글씨 화면에서 바로 답을 녹음할 수 있어요. 질문과 함께 저장되어 나중에 가장 정확하게 찾아져요.
             </p>
+            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/ahead-tea.webp" alt="" className="h-56 w-full object-cover md:h-full" />
           </div>
         </section>
 
         <section aria-labelledby="promise" className="py-8">
-          <h2 id="promise" className="font-serif text-2xl font-bold">여운의 약속</h2>
-          <ul className="mt-5 grid gap-4 sm:grid-cols-2">
+          <h2 id="promise" className="border-l-[3px] border-accent pl-4 font-serif text-[1.75rem] font-bold">여운의 약속</h2>
+          <ul className="mt-6 grid gap-4 sm:grid-cols-2">
             {PROMISES.map((p) => (
-              <li key={p.title} className="card">
-                <p className="font-semibold">{p.title}</p>
+              <li key={p.title} className="card flex gap-4 p-6">
+                <span aria-hidden className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent-soft font-serif font-bold text-accent-strong">✓</span>
+                <div>
+                <p className="font-serif text-lg font-bold">{p.title}</p>
                 <p className="mt-1 text-ink-soft">{p.body}</p>
+                </div>
               </li>
             ))}
           </ul>
