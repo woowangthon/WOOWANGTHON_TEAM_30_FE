@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Backdrop } from "./Wave";
 
 interface ShellProps {
   children: React.ReactNode;
@@ -10,8 +11,9 @@ interface ShellProps {
 /** 모든 화면의 바깥 틀: 위쪽 로고·뒤로 가기, 가운데 정렬된 본문. */
 export function Shell({ children, back, wide, right }: ShellProps) {
   return (
-    <div className="min-h-dvh pb-24">
-      <header className="sticky top-0 z-40 border-b border-line/70 bg-paper/90 backdrop-blur">
+    <div className="relative isolate min-h-dvh pb-24">
+      <Backdrop />
+      <header className="sticky top-0 z-40 border-b border-line/60 bg-paper/75 backdrop-blur">
         <div className={`mx-auto flex h-14 items-center gap-3 px-4 ${wide ? "max-w-4xl" : "max-w-2xl"}`}>
           {back ? (
             <Link href={back.href} className="-ml-2 rounded-xl px-2 py-2 text-ink-soft hover:text-ink" aria-label={`${back.label}(으)로 돌아가기`}>

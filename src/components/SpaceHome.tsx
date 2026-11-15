@@ -6,6 +6,13 @@ import { AskBox } from "./AskBox";
 import { Notice } from "./Feedback";
 import { canEdit } from "@/lib/space-context";
 
+function StatIcon({ name }: { name: string }) {
+  const p = { width: 18, height: 18, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.8, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  if (name === "mic") return (<svg {...p}><rect x="9" y="3" width="6" height="11" rx="3" /><path d="M5 11a7 7 0 0 0 14 0" /><path d="M12 18v3" /></svg>);
+  if (name === "photo") return (<svg {...p}><rect x="3" y="5" width="18" height="14" rx="2" /><circle cx="9" cy="10" r="1.6" /><path d="m21 16-5-5-9 8" /></svg>);
+  return (<svg {...p}><circle cx="12" cy="12" r="8" /><path d="M12 8v4l3 2" /></svg>);
+}
+
 export function SpaceHome({ space, base }: { space: Space; base: string }) {
   const c = space.counts;
   const editable = canEdit(space);
@@ -40,18 +47,17 @@ export function SpaceHome({ space, base }: { space: Space; base: string }) {
         </ol>
       )}
       <dl className="grid grid-cols-3 gap-3 text-center">
-        <div className="card p-3">
-          <dt className="text-sm text-ink-soft">목소리 클립</dt>
-          <dd className="text-xl font-bold">{c.person_clips}</dd>
-        </div>
-        <div className="card p-3">
-          <dt className="text-sm text-ink-soft">사진</dt>
-          <dd className="text-xl font-bold">{c.photos}</dd>
-        </div>
-        <div className="card p-3">
-          <dt className="text-sm text-ink-soft">처리 중</dt>
-          <dd className="text-xl font-bold">{c.processing}</dd>
-        </div>
+        {[
+          { label: "목소리 클립", value: c.person_clips, icon: "mic", tone: "bg-accent-soft text-accent-strong" },
+          { label: "사진", value: c.photos, icon: "photo", tone: "bg-sage-soft text-sage" },
+          { label: "처리 중", value: c.processing, icon: "clock", tone: "bg-guide-soft text-guide" },
+        ].map((s) => (
+          <div key={s.label} className="card p-3">
+            <span aria-hidden="true" className={`mx-auto mb-1 grid h-9 w-9 place-items-center rounded-full ${s.tone}`}><StatIcon name={s.icon} /></span>
+            <dt className="text-sm text-ink-soft">{s.label}</dt>
+            <dd className="text-xl font-bold">{s.value}</dd>
+          </div>
+        ))}
       </dl>
       {c.pending_voice > 0 && editable && (
         <Link href={`${base}/voices`} className="block">

@@ -51,8 +51,8 @@ export default function SpacesPage() {
       <ul className="space-y-3">
         {spaces.data?.map((s) => (
           <li key={s.id}>
-            <Link href={`/spaces/${s.id}`} className="card flex items-center gap-4 hover:border-accent/40">
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent-soft font-serif text-lg text-accent-strong" aria-hidden>
+            <Link href={`/spaces/${s.id}`} className="card flex items-center gap-4 transition-transform hover:-translate-y-0.5 hover:border-accent/40">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-accent-soft to-sage-soft font-serif text-lg font-bold text-accent-strong" aria-hidden>
                 {s.person_name.slice(0, 1)}
               </span>
               <span className="min-w-0">
@@ -61,6 +61,7 @@ export default function SpacesPage() {
                   목소리 클립 {s.counts.person_clips}개 · 자료 {s.counts.assets}개{s.role !== "owner" ? " · 초대받은 공간" : ""}
                 </span>
               </span>
+              <span aria-hidden="true" className="ml-auto text-xl text-ink-faint">›</span>
             </Link>
           </li>
         ))}

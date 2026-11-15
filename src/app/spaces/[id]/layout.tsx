@@ -7,6 +7,7 @@ import type { Space } from "@/lib/api-types.gen";
 import { SpaceContext } from "@/lib/space-context";
 import { Shell } from "@/components/Shell";
 import { SpaceNav } from "@/components/SpaceNav";
+import { SpaceHeader } from "@/components/SpaceHeader";
 import { ErrorBox, Spinner } from "@/components/Feedback";
 import { RestReminder } from "@/components/RestReminder";
 
@@ -29,10 +30,7 @@ export default function SpaceLayout({ children }: { children: React.ReactNode })
         <Spinner />
       ) : (
         <SpaceContext.Provider value={{ space: space.data, reload: space.reload, base: `/spaces/${id}` }}>
-          <div className="mb-4">
-            <p className="text-sm text-ink-faint">추억 공간</p>
-            <h1 className="font-serif text-2xl font-bold">{space.data.name}</h1>
-          </div>
+          <SpaceHeader space={space.data} />
           <SpaceNav spaceId={id} pendingVoice={space.data.counts.pending_voice} />
           {children}
           <RestReminder user={me.data} />
