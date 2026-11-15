@@ -13,10 +13,6 @@ export function Wave({ className = "" }: { className?: string }) {
 
 /** 첫 화면과 같은 따뜻한 배경 번짐. 부모에 relative isolate가 필요하다. */
 export function Backdrop() {
-  return (
-    <div
-      aria-hidden="true"
-      className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[36rem] bg-[radial-gradient(50rem_24rem_at_10%_-10%,var(--color-accent-soft),transparent_70%),radial-gradient(36rem_22rem_at_100%_0%,var(--color-sage-soft),transparent_70%)]"
-    />
-  );
+  // 번짐 그라데이션은 쓰지 않는다(평평한 종이 바탕). 호출하는 곳을 그대로 두려고 빈 요소만 남긴다.
+  return null;
 }

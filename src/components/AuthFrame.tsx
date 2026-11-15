@@ -15,7 +15,7 @@ export function AuthFrame({ title, sub, back, children }: Props) {
     <div className="relative isolate min-h-dvh">
       <Backdrop />
       <div className="mx-auto grid min-h-dvh max-w-6xl gap-8 px-4 py-6 lg:grid-cols-[1.05fr_1fr] lg:gap-14 lg:px-8 lg:py-10">
-        <aside className="relative hidden overflow-hidden rounded-[2rem] border border-line shadow-[0_30px_60px_-40px_rgba(53,47,42,0.6)] lg:block">
+        <aside className="relative hidden overflow-hidden rounded-[2rem] border border-line lg:block">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/auth-side.webp" alt="" className="absolute inset-0 h-full w-full object-cover" />
           <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-[#1e1f24]/70 via-[#1e1f24]/10 to-transparent" />
@@ -47,9 +47,9 @@ export function AuthFrame({ title, sub, back, children }: Props) {
             )}
           </div>
           <div className="flex flex-1 items-center py-8">
-            <div className="w-full rounded-[1.6rem] border border-line bg-card/95 p-6 shadow-[0_22px_48px_-32px_rgba(53,47,42,0.55)] sm:p-9">
-              <h1 className="border-l-[3px] border-accent pl-4 font-serif text-[1.8rem] font-bold leading-snug">{title}</h1>
-              {sub && <p className="mt-2 pl-[1.2rem] text-ink-soft">{sub}</p>}
+            <div className="w-full rounded-[1.6rem] border border-line bg-card/95 p-6 sm:p-9">
+              <h1 className="font-serif text-[1.8rem] font-bold leading-snug">{title}</h1>
+              {sub && <p className="mt-2 text-ink-soft">{sub}</p>}
               <div className="mt-7">{children}</div>
             </div>
           </div>

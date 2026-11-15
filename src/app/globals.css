@@ -1,24 +1,24 @@
 @import "tailwindcss";
 
-/* 여운 — 한지 흰 바탕, 먹색 글씨, 쪽빛 주색, 주홍은 아주 작은 표시에만.
-   그 사람의 말(원본, 쪽빛)과 AI가 만든 말·여운 안내(회갈색)를 색으로도 구분한다. */
+/* 여운 — 해질녘 여운: 따뜻한 흰 바탕, 먹 갈색 글씨, 대추색 주색, 노을빛은 작은 표시에만.
+   그 사람의 말(원본, 대추색)과 AI가 만든 말·여운 안내(차가운 회청색)를 색으로도 구분한다. */
 @theme {
-  --color-paper: #fbfaf7;
-  --color-paper-deep: #f3f1ec;
-  --color-card: #ffffff;
-  --color-ink: #1e1f24;
-  --color-ink-soft: #5b5e66;
-  --color-ink-faint: #93969e;
-  --color-line: #e6e3dd;
-  --color-accent: #2f4a7a;
-  --color-accent-strong: #22385f;
-  --color-accent-soft: #e9eef6;
-  --color-peach: #c65a3a;
-  --color-peach-soft: #f8e9e3;
-  --color-sage: #4f6b5a;
-  --color-sage-soft: #e8efea;
-  --color-guide: #7a6250;
-  --color-guide-soft: #f3eee8;
+  --color-paper: #f9f6f1;
+  --color-paper-deep: #f1ebe2;
+  --color-card: #fffdfa;
+  --color-ink: #2b2420;
+  --color-ink-soft: #6a5f57;
+  --color-ink-faint: #9d928a;
+  --color-line: #e8dfd4;
+  --color-accent: #8c3f2b;
+  --color-accent-strong: #6e2f20;
+  --color-accent-soft: #f5e8e1;
+  --color-peach: #d98b4e;
+  --color-peach-soft: #f9ecdf;
+  --color-sage: #5f7363;
+  --color-sage-soft: #e9eee8;
+  --color-guide: #4f5d73;
+  --color-guide-soft: #edf0f4;
   --color-alert: #a3402e;
   --color-alert-soft: #fbe9e4;
   --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
@@ -61,10 +61,10 @@ body {
   @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-xl px-5 font-semibold transition-all disabled:cursor-not-allowed disabled:opacity-50;
 }
 @utility btn-primary {
-  @apply btn bg-accent-strong text-white shadow-[0_10px_22px_-14px_rgba(34,56,95,0.9)] hover:bg-accent disabled:shadow-none;
+  @apply btn bg-accent-strong text-white hover:bg-accent;
 }
 @utility btn-soft {
-  @apply btn bg-accent-soft text-accent-strong hover:bg-[#dde5f1];
+  @apply btn bg-accent-soft text-accent-strong hover:bg-[#efdcd2];
 }
 @utility btn-ghost {
   @apply btn border border-line bg-card text-ink hover:border-accent/30 hover:bg-paper;
@@ -73,10 +73,10 @@ body {
   @apply btn bg-alert text-white hover:opacity-90;
 }
 @utility card {
-  @apply rounded-[1.25rem] border border-line bg-card p-5 shadow-[0_1px_2px_rgba(60,40,20,0.04),0_14px_34px_-26px_rgba(53,47,42,0.4)];
+  @apply rounded-xl border border-line bg-card p-5;
 }
 @utility field {
-  @apply w-full rounded-xl border border-line bg-card px-4 py-3 text-base text-ink transition-shadow placeholder:text-ink-faint focus:border-accent focus:shadow-[0_0_0_4px_rgba(47,74,122,0.12)] focus:outline-none;
+  @apply w-full rounded-xl border border-line bg-card px-4 py-3 text-base text-ink transition-shadow placeholder:text-ink-faint focus:border-accent focus:shadow-[0_0_0_3px_rgba(140,63,43,0.12)] focus:outline-none;
 }
 @utility label {
   @apply mb-1 block text-sm font-semibold text-ink-soft;

@@ -5,7 +5,7 @@
 
 ## 공통 스타일 (모든 프롬프트 끝에 붙이기)
 
-서비스 색이 한지 흰색 · 먹 · 쪽빛으로 바뀌었어요. 이미 받은 `landing-hero`, `auth-side`와 결이 맞도록 따뜻한 수채화는 유지하고, 작은 물건에 쪽빛을 조금 넣어요.
+서비스 색은 '해질녘 여운'(따뜻한 흰 바탕, 먹 갈색, 대추색)이에요. 받은 그림들과 결이 맞도록 따뜻한 수채화와 청화백자 무늬를 유지해요.
 
 ```
 soft hand-painted watercolor illustration with delicate ink linework, warm morning sunlight, gentle leaf shadows, clean off-white hanji paper tones, small accents of deep indigo blue (like blue-and-white porcelain), muted natural wood colors, nostalgic and calm Korean home atmosphere, no people, no faces, no text, no letters, no logo, high detail, soft edges
@@ -19,12 +19,12 @@ soft hand-painted watercolor illustration with delicate ink linework, warm morni
 |---|---|---|
 | `landing-hero.webp` ✅ | 16:9 가로 (받은 그림 1672×941) | 첫 화면 오른쪽, 대화 미리보기 카드 뒤 배경 |
 | `auth-side.webp` ✅ | 9:16 세로 (받은 그림 941×1672) | 로그인·가입·초대 화면 왼쪽 그림 판 |
-| `hero-kitchen.webp` | 1600×1000 (16:10) | 공간 홈 맨 위 카드, 내 공간 목록 카드 띠 |
-| `chapter-kitchen.webp` | 1200×440 (약 2.7:1) | 홈 주제 카드 (음식·요리·살림·집) |
-| `chapter-table.webp` | 1200×440 | 홈 주제 카드 (가족·사랑·명절·응원) |
-| `chapter-walk.webp` | 1200×440 | 홈 주제 카드 (계절·날씨·여행·고향) |
-| `ahead-tea.webp` | 1200×900 (4:3) | 첫 화면 '미리 남겨 두기' 칸 |
-| `empty-letters.webp` | 1400×500 (약 2.8:1) | 내 공간 목록이 비었을 때 |
+| `hero-kitchen.webp` ✅ | 1600×1000 (16:10) | 공간 홈 맨 위 카드, 내 공간 목록 카드 띠 |
+| `chapter-kitchen.webp` ✅ | 1200×440 (약 2.7:1) | 홈 주제 카드 (음식·요리·살림·집) |
+| `chapter-table.webp` ✅ | 1200×440 | 홈 주제 카드 (가족·사랑·명절·응원) |
+| `chapter-walk.webp` ✅ | 1200×440 | 홈 주제 카드 (계절·날씨·여행·고향) |
+| `ahead-tea.webp` ✅ | 1200×900 (4:3) | 첫 화면 '미리 남겨 두기' 칸 |
+| `empty-letters.webp` ✅ | 1400×500 (약 2.8:1) | 내 공간 목록이 비었을 때 |
 
 ## 프롬프트
 

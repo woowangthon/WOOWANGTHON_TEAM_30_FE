@@ -74,7 +74,7 @@ export function AppFrame({ space, base, sample, pendingVoice = 0, back, right, c
                     href={`${base}${n.href}`}
                     aria-current={active ? "page" : undefined}
                     className={`flex min-h-12 items-center gap-3 rounded-2xl px-4 text-[1.02rem] transition-colors ${
-                      active ? "bg-accent-soft font-semibold text-ink shadow-[inset_0_0_0_1px_rgba(47,74,122,0.08)]" : "text-ink-soft hover:bg-card/70 hover:text-ink"
+                      active ? "bg-accent-soft font-semibold text-ink" : "text-ink-soft hover:bg-card/70 hover:text-ink"
                     }`}
                   >
                     <Icon name={n.icon} size={21} className={active ? "text-accent-strong" : ""} />
@@ -105,7 +105,7 @@ export function AppFrame({ space, base, sample, pendingVoice = 0, back, right, c
           </Link>
           <form
             role="search"
-            className="ml-auto hidden w-full max-w-md items-center gap-3 rounded-2xl border border-line bg-card/90 px-4 shadow-[0_1px_2px_rgba(60,40,20,0.04)] focus-within:border-accent md:flex"
+            className="ml-auto hidden w-full max-w-md items-center gap-3 rounded-2xl border border-line bg-card/90 px-4 focus-within:border-accent md:flex"
             onSubmit={(e) => {
               e.preventDefault();
               const v = q.trim();
@@ -150,7 +150,7 @@ export function AppFrame({ space, base, sample, pendingVoice = 0, back, right, c
       </header>
 
       <main className="px-4 pb-24 pt-4 lg:px-10 lg:pt-2">
-        <div className="mb-7 border-l-[3px] border-accent pl-5">
+        <div className="mb-8">
           <h1 className="font-serif text-[1.9rem] font-bold leading-tight lg:text-[2.4rem]">{h.title}</h1>
           <p className="mt-1.5 text-ink-soft lg:text-lg">{h.sub}</p>
         </div>

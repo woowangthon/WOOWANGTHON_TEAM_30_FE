@@ -36,8 +36,8 @@ export function Shell({ children, back, wide, right }: ShellProps) {
 export function PageTitle({ title, sub }: { title: string; sub?: React.ReactNode }) {
   return (
     <div className="mb-6">
-      <h1 className="border-l-[3px] border-accent pl-4 font-serif text-[1.75rem] font-bold leading-snug">{title}</h1>
-      {sub && <p className="mt-2 pl-[1.2rem] text-ink-soft">{sub}</p>}
+      <h1 className="font-serif text-[1.75rem] font-bold leading-snug">{title}</h1>
+      {sub && <p className="mt-2 text-ink-soft">{sub}</p>}
     </div>
   );
 }

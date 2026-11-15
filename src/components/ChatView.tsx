@@ -120,7 +120,7 @@ export function ChatView({ space }: { space: Space; canFavorite?: boolean }) {
 
       {turns.map((t) => (
         <section key={t.id} className="space-y-3" aria-label="대화">
-          <p className="ml-auto w-fit max-w-[85%] rounded-2xl rounded-br-md bg-accent-strong px-4 py-3 text-white shadow-[0_10px_22px_-16px_rgba(34,56,95,0.9)]">{t.message}</p>
+          <p className="ml-auto w-fit max-w-[85%] rounded-2xl rounded-br-md bg-accent-strong px-4 py-3 text-white">{t.message}</p>
           {t.error && <ErrorBox message={t.error} onRetry={() => send(t.message)} />}
           {t.response && <Reply r={t.response} person={person} />}
         </section>
@@ -136,7 +136,7 @@ export function ChatView({ space }: { space: Space; canFavorite?: boolean }) {
       <div ref={bottom} />
 
       <form
-        className="sticky bottom-3 z-30 flex items-end gap-2 rounded-[1.4rem] border border-line bg-card p-2 shadow-[0_20px_44px_-24px_rgba(53,47,42,0.55)] focus-within:border-accent/50"
+        className="sticky bottom-3 z-30 flex items-end gap-2 rounded-[1.4rem] border border-line bg-card p-2 focus-within:border-accent/50"
         onSubmit={(e) => {
           e.preventDefault();
           void send(text);
@@ -184,14 +184,14 @@ function PersonBubble({ person, children, dashed }: { person: string; children: 
     <div className="flex items-start gap-2">
       <span
         aria-hidden
-        className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-peach-soft to-accent-soft font-serif font-bold text-accent-strong"
+        className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent-soft font-serif font-bold text-accent-strong"
       >
         {person.slice(0, 1)}
       </span>
       <div className="min-w-0 max-w-[85%] space-y-1">
         <p className="text-xs text-ink-faint">{person}</p>
         <div
-          className={`space-y-2 rounded-2xl rounded-tl-md bg-card px-4 py-3 shadow-[0_12px_28px_-24px_rgba(53,47,42,0.6)] ${
+          className={`space-y-2 rounded-2xl rounded-tl-md bg-card px-4 py-3 ${
             dashed ? "border-2 border-dashed border-guide/40" : "border border-line"
           }`}
         >

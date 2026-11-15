@@ -249,7 +249,7 @@ function Frame({ children }: { children: React.ReactNode }) {
       <Backdrop />
       <main className="mx-auto max-w-xl px-5 py-10 text-[1.25rem] leading-relaxed">
         <Logo className="mb-8" />
-        <div className="rounded-[1.6rem] border border-line bg-card/95 p-6 shadow-[0_22px_48px_-30px_rgba(53,47,42,0.5)] sm:p-8">{children}</div>
+        <div className="rounded-[1.6rem] border border-line bg-card/95 p-6 sm:p-8">{children}</div>
       </main>
     </div>
   );

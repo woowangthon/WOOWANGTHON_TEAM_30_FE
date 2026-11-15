@@ -54,7 +54,7 @@ export default function SpacesPage() {
           <li key={s.id}>
             <Link
               href={`/spaces/${s.id}`}
-              className="group block overflow-hidden rounded-[1.4rem] border border-line bg-card shadow-[0_18px_40px_-30px_rgba(53,47,42,0.55)] transition-transform hover:-translate-y-0.5 hover:border-accent/30"
+              className="group block overflow-hidden rounded-[1.4rem] border border-line bg-card transition-transform hover:-translate-y-0.5 hover:border-accent/30"
             >
               <div className="relative h-28 overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -64,7 +64,7 @@ export default function SpacesPage() {
               <div className="-mt-9 flex items-end gap-4 px-5 pb-5">
                 <span
                   aria-hidden
-                  className="relative grid h-16 w-16 shrink-0 place-items-center rounded-full border-4 border-card bg-gradient-to-br from-peach-soft to-accent-soft font-serif text-2xl font-bold text-accent-strong shadow-sm"
+                  className="relative grid h-16 w-16 shrink-0 place-items-center rounded-full border-4 border-card bg-accent-soft font-serif text-2xl font-bold text-accent-strong shadow-sm"
                 >
                   {s.person_name.slice(0, 1)}
                 </span>

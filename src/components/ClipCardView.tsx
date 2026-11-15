@@ -32,7 +32,7 @@ export function ClipCardView({
       </p>
       {card.question && <p className="rounded-xl bg-paper px-3 py-2 text-sm text-ink-soft">질문 · {card.question}</p>}
       {card.transcript ? (
-        <blockquote className="border-l-2 border-accent/40 pl-4 font-serif text-[1.15rem] leading-relaxed text-ink">“{card.transcript}”</blockquote>
+        <blockquote className="font-serif text-[1.15rem] leading-relaxed text-ink">“{card.transcript}”</blockquote>
       ) : (
         <p className="text-ink-faint">자막이 아직 없어요. 들어 보시고 ‘목소리 확인’에서 적을 수 있어요.</p>
       )}

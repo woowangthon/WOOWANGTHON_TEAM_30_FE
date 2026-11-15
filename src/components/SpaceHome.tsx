@@ -54,16 +54,13 @@ function Hero({ space, base }: { space: Space; base: string }) {
   const c = space.counts;
   const who = [space.person_name, space.relationship].filter(Boolean).join(" ");
   return (
-    <section className="relative isolate overflow-hidden rounded-[1.6rem] border border-line bg-[#f6efe4] shadow-[0_22px_48px_-30px_rgba(53,47,42,0.55)]">
+    <section className="relative isolate overflow-hidden rounded-[1.6rem] border border-line bg-[#f6efe4]">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/images/hero-kitchen.webp" alt="" className="absolute inset-y-0 right-0 -z-10 h-full w-full object-cover sm:w-[66%]" />
       <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-r from-[#f6efe4] from-25% via-[#f6efe4]/85 via-50% to-[#f6efe4]/0 sm:from-35% sm:via-[#f6efe4]/70" />
       <div className="max-w-[26rem] px-6 py-8 sm:px-9 sm:py-10">
-        <span className="inline-flex items-center gap-2 rounded-lg bg-accent-soft/90 px-3 py-1.5 text-sm font-medium text-accent-strong">
-          <Icon name="book" size={17} />
-          {space.is_sample ? "샘플 공간 · 가상 인물" : space.role === "owner" ? "내 추억 공간" : "초대받은 추억 공간"}
-        </span>
-        <h2 className="mt-4 font-serif text-[1.85rem] font-bold leading-tight text-ink sm:text-[2.15rem]">{who}</h2>
+        <p className="text-sm text-ink-soft">{space.is_sample ? "샘플 공간 · 가상 인물" : space.role === "owner" ? "내 추억 공간" : "초대받은 추억 공간"}</p>
+        <h2 className="mt-1.5 font-serif text-[1.85rem] font-bold leading-tight text-ink sm:text-[2.15rem]">{who}</h2>
         <p className="mt-3 text-[1.02rem] leading-relaxed text-ink-soft">
           {space.relationship || "그분"}의 실제 목소리로 남긴
           <br />
@@ -93,7 +90,7 @@ function ChapterCard({ ch, index, base }: { ch: Chapter; index: number; base: st
   return (
     <Link
       href={`${base}/timeline?tag=${encodeURIComponent(ch.tag)}`}
-      className="group overflow-hidden rounded-[1.1rem] border border-line bg-card shadow-[0_14px_30px_-26px_rgba(53,47,42,0.55)] transition-transform hover:-translate-y-0.5 hover:border-accent/30"
+      className="group overflow-hidden rounded-[1.1rem] border border-line bg-card transition-transform hover:-translate-y-0.5 hover:border-accent/30"
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={ch.art} alt="" loading="lazy" className="h-28 w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
@@ -172,11 +169,8 @@ export function SpaceHome({ space, base }: { space: Space; base: string }) {
                   {steps.map((s, i) => (
                     <li key={s.title}>
                       <Link href={s.href} className="card flex h-full flex-col gap-3 hover:border-accent/40">
-                        <span className={`grid h-11 w-11 place-items-center rounded-full ${s.done ? "bg-accent text-white" : "bg-accent-soft text-accent-strong"}`}>
-                          {s.done ? "✓" : <Icon name={s.icon} size={21} />}
-                        </span>
                         <span className="font-serif text-lg font-bold">
-                          <span className="mr-2 text-accent">{i + 1}</span>
+                          <span className="mr-2 text-accent">{s.done ? "✓" : `${i + 1}.`}</span>
                           {s.title}
                         </span>
                         <span className="text-[0.95rem] text-ink-soft">{s.body}</span>

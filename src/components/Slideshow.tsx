@@ -59,7 +59,7 @@ export function Slideshow({ photos, clips, personName, onClose }: { photos: Phot
         {photo?.caption && <p className="text-sm text-white/60">{photo.caption}</p>}
         {clip && (
           <>
-            <p className="text-sm text-[#c9d6ec]">
+            <p className="text-sm text-[#f0cdb8]">
               {personName}의 목소리 · {clip.source_label} {clip.audio_status === "placeholder" ? "· 샘플 녹음 준비 중" : ""}
             </p>
             <p className="font-serif text-xl leading-relaxed">“{clip.transcript}”</p>
