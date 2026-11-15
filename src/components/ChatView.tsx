@@ -120,7 +120,7 @@ export function ChatView({ space }: { space: Space; canFavorite?: boolean }) {
 
       {turns.map((t) => (
         <section key={t.id} className="space-y-3" aria-label="대화">
-          <p className="ml-auto w-fit max-w-[85%] rounded-2xl rounded-br-md bg-accent-strong px-4 py-3 text-white shadow-[0_10px_22px_-16px_rgba(63,82,50,0.9)]">{t.message}</p>
+          <p className="ml-auto w-fit max-w-[85%] rounded-2xl rounded-br-md bg-accent-strong px-4 py-3 text-white shadow-[0_10px_22px_-16px_rgba(34,56,95,0.9)]">{t.message}</p>
           {t.error && <ErrorBox message={t.error} onRetry={() => send(t.message)} />}
           {t.response && <Reply r={t.response} person={person} />}
         </section>

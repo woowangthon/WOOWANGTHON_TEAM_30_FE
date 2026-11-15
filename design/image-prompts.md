@@ -1,20 +1,24 @@
 # 화면 이미지 프롬프트
 
-지금 `public/images/`의 이미지는 디자인 목업에서 잘라 키운 임시본입니다(같은 그림을 여러 이름으로 복사해 둔 것도 있어요).
+`landing-hero.webp`, `auth-side.webp`는 새로 만든 그림이 들어가 있어요. 나머지는 디자인 목업에서 잘라 키운 임시본입니다(같은 그림을 여러 이름으로 복사해 둔 것도 있어요).
 아래 프롬프트로 새로 만든 이미지를 **같은 파일 이름(webp)** 으로 덮어쓰면 코드 수정 없이 바뀝니다.
 
 ## 공통 스타일 (모든 프롬프트 끝에 붙이기)
 
+서비스 색이 한지 흰색 · 먹 · 쪽빛으로 바뀌었어요. 이미 받은 `landing-hero`, `auth-side`와 결이 맞도록 따뜻한 수채화는 유지하고, 작은 물건에 쪽빛을 조금 넣어요.
+
 ```
-soft hand-painted gouache and watercolor illustration, warm morning sunlight, gentle leaf shadows, cream, beige and muted sage-green palette, nostalgic and calm Korean home atmosphere, no people, no faces, no text, no letters, no logo, high detail, soft edges
+soft hand-painted watercolor illustration with delicate ink linework, warm morning sunlight, gentle leaf shadows, clean off-white hanji paper tones, small accents of deep indigo blue (like blue-and-white porcelain), muted natural wood colors, nostalgic and calm Korean home atmosphere, no people, no faces, no text, no letters, no logo, high detail, soft edges
 ```
+
+크기(비율)는 프롬프트 글이 아니라 **생성기의 비율·크기 설정**에서 고르세요. 아래 표의 비율을 쓰면 돼요.
 
 ## 파일 목록
 
 | 파일 | 크기·비율 | 쓰는 곳 |
 |---|---|---|
-| `landing-hero.webp` | 1600×1200 (4:3) | 첫 화면 오른쪽, 대화 미리보기 카드 뒤 배경 |
-| `auth-side.webp` | 1000×1400 (5:7 세로) | 로그인·가입·초대 화면 왼쪽 그림 판 |
+| `landing-hero.webp` ✅ | 16:9 가로 (받은 그림 1672×941) | 첫 화면 오른쪽, 대화 미리보기 카드 뒤 배경 |
+| `auth-side.webp` ✅ | 9:16 세로 (받은 그림 941×1672) | 로그인·가입·초대 화면 왼쪽 그림 판 |
 | `hero-kitchen.webp` | 1600×1000 (16:10) | 공간 홈 맨 위 카드, 내 공간 목록 카드 띠 |
 | `chapter-kitchen.webp` | 1200×440 (약 2.7:1) | 홈 주제 카드 (음식·요리·살림·집) |
 | `chapter-table.webp` | 1200×440 | 홈 주제 카드 (가족·사랑·명절·응원) |

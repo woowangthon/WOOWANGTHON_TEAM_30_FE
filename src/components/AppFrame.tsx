@@ -74,7 +74,7 @@ export function AppFrame({ space, base, sample, pendingVoice = 0, back, right, c
                     href={`${base}${n.href}`}
                     aria-current={active ? "page" : undefined}
                     className={`flex min-h-12 items-center gap-3 rounded-2xl px-4 text-[1.02rem] transition-colors ${
-                      active ? "bg-accent-soft font-semibold text-ink shadow-[inset_0_0_0_1px_rgba(94,113,72,0.08)]" : "text-ink-soft hover:bg-card/70 hover:text-ink"
+                      active ? "bg-accent-soft font-semibold text-ink shadow-[inset_0_0_0_1px_rgba(47,74,122,0.08)]" : "text-ink-soft hover:bg-card/70 hover:text-ink"
                     }`}
                   >
                     <Icon name={n.icon} size={21} className={active ? "text-accent-strong" : ""} />

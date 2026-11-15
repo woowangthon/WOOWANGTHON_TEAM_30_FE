@@ -18,7 +18,7 @@ export function AuthFrame({ title, sub, back, children }: Props) {
         <aside className="relative hidden overflow-hidden rounded-[2rem] border border-line shadow-[0_30px_60px_-40px_rgba(53,47,42,0.6)] lg:block">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/auth-side.webp" alt="" className="absolute inset-0 h-full w-full object-cover" />
-          <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-[#2f2b26]/70 via-[#2f2b26]/10 to-transparent" />
+          <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-[#1e1f24]/70 via-[#1e1f24]/10 to-transparent" />
           <div className="absolute inset-x-0 top-0 p-8">
             <Link href="/" aria-label="여운 처음 화면" className="inline-block rounded-2xl bg-card/85 px-4 py-2 backdrop-blur">
               <Logo />

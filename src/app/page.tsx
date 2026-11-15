@@ -32,7 +32,7 @@ function ChatPreview() {
       <div aria-hidden="true" className="absolute inset-0 -z-10 overflow-hidden rounded-[2.2rem] border border-line shadow-[0_30px_60px_-40px_rgba(53,47,42,0.6)]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/landing-hero.webp" alt="" className="h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-br from-[#f6efe4]/30 to-[#2f2b26]/10" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#f6efe4]/30 to-[#1e1f24]/10" />
       </div>
       <figure className="mx-auto max-w-sm translate-y-0 p-5 sm:p-8 lg:ml-auto lg:mr-8">
         <div className="rounded-[1.8rem] border border-white/70 bg-card/92 p-5 shadow-[0_24px_50px_-25px_rgba(53,47,42,0.55)] backdrop-blur">
