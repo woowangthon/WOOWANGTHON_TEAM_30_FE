@@ -30,7 +30,7 @@ export function SpaceNav({ spaceId, sample, pendingVoice }: { spaceId: string; s
                 href={href}
                 aria-current={active ? "page" : undefined}
                 className={`inline-flex min-h-10 items-center rounded-full px-4 text-[0.95rem] ${
-                  active ? "bg-ink text-paper" : "border border-line bg-card text-ink-soft hover:text-ink"
+                  active ? "bg-ink text-paper shadow-[0_6px_16px_-8px_rgba(53,47,42,0.6)]" : "border border-line bg-card/80 text-ink-soft hover:border-accent/40 hover:text-ink"
                 }`}
               >
                 {t.label}

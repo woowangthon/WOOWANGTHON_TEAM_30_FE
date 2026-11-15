@@ -6,6 +6,7 @@ import type { AppConfig, Space } from "@/lib/api-types.gen";
 import { SpaceContext } from "@/lib/space-context";
 import { Shell } from "@/components/Shell";
 import { SpaceNav } from "@/components/SpaceNav";
+import { SpaceHeader } from "@/components/SpaceHeader";
 import { ErrorBox, Spinner } from "@/components/Feedback";
 
 /** 가입 없이 체험하는 샘플 공간 (읽기 전용). */
@@ -21,10 +22,7 @@ export default function SampleLayout({ children }: { children: React.ReactNode }
   else
     body = (
       <SpaceContext.Provider value={{ space: space.data, reload: space.reload, base: "/sample" }}>
-        <div className="mb-4">
-          <p className="text-sm text-ink-faint">샘플 공간 · 가상 인물</p>
-          <h1 className="font-serif text-2xl font-bold">{space.data.name}</h1>
-        </div>
+        <SpaceHeader space={space.data} sample />
         <SpaceNav spaceId={space.data.id} sample />
         {children}
       </SpaceContext.Provider>

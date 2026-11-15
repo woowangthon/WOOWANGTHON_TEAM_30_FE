@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Wave } from "@/components/Wave";
 
 const PROMISES = [
   { title: "원본이 먼저", body: "녹음에 그대로 있는 말이면 언제나 실제 목소리를 먼저 들려 드려요. 그분의 목소리를 합성하지 않아요." },
@@ -14,18 +15,6 @@ const STEPS = [
   { icon: "chat", title: "메시지 보내기", body: "“오늘 면접 보고 왔어” 하고 보내면, 그분 말투로 답장이 와요. 녹음에 그대로 있는 말이면 실제 목소리로 들려 드려요." },
 ];
 
-
-const BARS = [6, 14, 9, 18, 12, 22, 15, 10, 19, 8, 16, 11, 20, 7, 13, 17, 9, 14, 6, 11];
-
-function Wave({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 120 24" className={className} aria-hidden="true">
-      {BARS.map((h, i) => (
-        <rect key={i} x={i * 6 + 1} y={12 - h / 2} width="3" height={h} rx="1.5" fill="currentColor" />
-      ))}
-    </svg>
-  );
-}
 
 function StepIcon({ name }: { name: string }) {
   const common = { width: 22, height: 22, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.8, strokeLinecap: "round" as const, strokeLinejoin: "round" as const, "aria-hidden": true };
