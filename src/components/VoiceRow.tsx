@@ -85,7 +85,7 @@ export function VoiceRow({ clip, personName }: { clip: ClipCard; personName: str
         aria-pressed={playing}
         aria-label={ready ? `${playing ? "멈추기" : "듣기"}: ${clip.transcript}` : "샘플 녹음 준비 중"}
         title={ready ? undefined : "샘플 녹음 준비 중"}
-        className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-accent text-white transition-colors hover:bg-accent-strong disabled:bg-accent/45"
+        className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-accent text-white transition-colors hover:bg-accent-strong disabled:bg-paper-deep disabled:text-ink-faint"
       >
         <Icon name={playing ? "pause" : "play"} size={18} className={playing ? "" : "translate-x-[1px]"} />
       </button>

@@ -24,6 +24,7 @@ soft hand-painted watercolor illustration with delicate ink linework, warm morni
 | `chapter-table.webp` ✅ | 1200×440 | 홈 주제 카드 (가족·사랑·명절·응원) |
 | `chapter-walk.webp` ✅ | 1200×440 | 홈 주제 카드 (계절·날씨·여행·고향) |
 | `ahead-tea.webp` ✅ | 1200×900 (4:3) | 첫 화면 '미리 남겨 두기' 칸 |
+| `sidebar-leaves.webp` (선택) | 600×900 (2:3 세로) | 공간 화면 왼쪽 메뉴 아래쪽, 은은한 잎 그림자. 없으면 안 보여요 |
 | `empty-letters.webp` ✅ | 1400×500 (약 2.8:1) | 내 공간 목록이 비었을 때 |
 
 ## 프롬프트
@@ -75,3 +76,8 @@ Wide panoramic still life on a wooden desk by a window: a small stack of old fam
 - `chapter-letter.webp`: a handwritten letter, old family photos and a pair of reading glasses on a wooden desk by the window
 - `chapter-study.webp`: a student's desk at night with an open workbook, pencils and a small lunch box wrapped in cloth, warm lamp light
 - `chapter-hometown.webp`: a small countryside village with low tiled-roof houses, a vegetable field and distant mountains at golden hour
+
+**sidebar-leaves** (선택) — 메뉴 바탕에 곱하기로 깔리므로 흰 바탕에 연한 그림자만
+```
+Vertical image, 2:3 aspect ratio, 600x900 pixels. Soft blurry shadows of leaves and a thin branch cast on a plain warm off-white wall, the shadows concentrated in the lower half and fading out toward the top, very low contrast, pale warm gray-brown shadows only, pure off-white background, no objects, no plants visible, only shadows. Soft hand-painted watercolor texture, no text, no letters, no logo.
+```

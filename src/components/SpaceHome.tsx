@@ -57,7 +57,7 @@ function Hero({ space, base }: { space: Space; base: string }) {
     <section className="relative isolate overflow-hidden rounded-[1.6rem] border border-line bg-[#f6efe4]">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/images/hero-kitchen.webp" alt="" className="absolute inset-y-0 right-0 -z-10 h-full w-full object-cover sm:w-[66%]" />
-      <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-r from-[#f6efe4] from-25% via-[#f6efe4]/85 via-50% to-[#f6efe4]/0 sm:from-35% sm:via-[#f6efe4]/70" />
+      <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-r from-[#f6efe4] from-40% via-[#f6efe4]/90 via-60% to-[#f6efe4]/10 sm:from-40% sm:via-[#f6efe4]/80" />
       <div className="max-w-[26rem] px-6 py-8 sm:px-9 sm:py-10">
         <p className="text-sm text-ink-soft">{space.is_sample ? "샘플 공간 · 가상 인물" : space.role === "owner" ? "내 추억 공간" : "초대받은 추억 공간"}</p>
         <h2 className="mt-1.5 font-serif text-[1.85rem] font-bold leading-tight text-ink sm:text-[2.15rem]">{who}</h2>
@@ -67,14 +67,14 @@ function Hero({ space, base }: { space: Space; base: string }) {
           우리 가족의 일상과 이야기
         </p>
         <div className="mt-6 flex flex-wrap items-center gap-3">
-          <Link href={`${base}/timeline`} className="btn-primary rounded-xl bg-accent-strong px-6 text-[1.02rem] hover:bg-accent">
-            <Icon name="mic" size={19} />
-            녹음 모아 듣기
+          <Link href={`${base}/chat`} className="btn-primary rounded-xl px-6 text-[1.02rem]">
+            <Icon name="chat" size={19} />
+            {space.relationship || space.person_name}께 말 걸어 보기
             <Icon name="arrow-right" size={18} />
           </Link>
-          <Link href={`${base}/chat`} className="btn rounded-xl border border-accent/25 bg-card/80 px-5 text-accent-strong hover:bg-card">
-            <Icon name="chat" size={19} />
-            말 걸기
+          <Link href={`${base}/timeline`} className="btn rounded-xl border border-accent/25 bg-card/80 px-5 text-accent-strong hover:bg-card">
+            <Icon name="mic" size={19} />
+            녹음 모아 듣기
           </Link>
         </div>
         <p className="mt-5 text-sm text-ink-soft">
@@ -147,7 +147,7 @@ export function SpaceHome({ space, base }: { space: Space; base: string }) {
   ];
 
   return (
-    <div className="grid grid-cols-[minmax(0,1fr)] gap-7 xl:grid-cols-[minmax(0,1fr)_24rem]">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-7 min-[1360px]:grid-cols-[minmax(0,1fr)_24rem]">
       <div className="min-w-0 space-y-7">
         <Hero space={space} base={base} />
         <AskBox base={base} personName={space.person_name} />
@@ -213,7 +213,7 @@ export function SpaceHome({ space, base }: { space: Space; base: string }) {
         )}
       </div>
 
-      <aside className="xl:sticky xl:top-28 xl:self-start">
+      <aside className="min-[1360px]:sticky min-[1360px]:top-28 min-[1360px]:self-start">
         <section className="card p-6" aria-labelledby="recent-voices">
           <h2 id="recent-voices" className="flex items-center gap-2.5 font-serif text-[1.45rem] font-bold">
             <Icon name="mic" size={24} />

@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import type { Space } from "@/lib/api-types.gen";
 import { Backdrop } from "./Wave";
-import { Icon, LeafShadow, Logo, type IconName } from "./Icons";
+import { Icon, Logo, type IconName } from "./Icons";
 
 interface NavItem {
   href: string;
@@ -89,13 +89,29 @@ export function AppFrame({ space, base, sample, pendingVoice = 0, back, right, c
           </ul>
         </nav>
         <div className="relative z-10 mt-8 border-t border-line/70 pt-5">
-          <p className="px-4 text-xs text-ink-faint">{sample ? "샘플 공간 · 가상 인물" : "지금 보는 공간"}</p>
-          <h2 className="truncate px-4 font-serif text-lg font-bold">{space.name}</h2>
-          <Link href={back.href} className="mt-3 inline-flex items-center gap-1 rounded-xl px-4 py-1 text-sm text-ink-soft hover:text-ink">
+          <p className="px-2 text-xs text-ink-faint">{sample ? "샘플 공간 · 가상 인물" : "지금 보는 공간"}</p>
+          <div className="mt-2 flex items-center gap-3 rounded-xl border border-line bg-card/80 px-3 py-3">
+            <span aria-hidden className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-accent-soft font-serif text-lg font-bold text-accent-strong">
+              {space.person_name.slice(0, 1)}
+            </span>
+            <span className="min-w-0">
+              <h2 className="truncate font-serif text-[1.05rem] font-bold leading-tight">{space.name}</h2>
+              <span className="text-xs text-ink-soft">목소리 {space.counts.person_clips}개 · 자료 {space.counts.assets}개</span>
+            </span>
+          </div>
+          <Link href={back.href} className="mt-3 inline-flex items-center gap-1 rounded-xl px-2 py-1 text-sm text-ink-soft hover:text-ink">
             ← {back.label}
           </Link>
         </div>
-        <LeafShadow className="pointer-events-none absolute -bottom-10 -left-10 h-80 w-64 text-ink/[0.05]" />
+        {/* 아래쪽 잎 그림자 그림. 파일이 없으면 숨긴다(design/image-prompts.md의 sidebar-leaves) */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/sidebar-leaves.webp"
+          alt=""
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 w-full opacity-60 mix-blend-multiply"
+          onError={(e) => (e.currentTarget.style.display = "none")}
+        />
       </aside>
 
       <header className="sticky top-0 z-30 border-b border-line/60 bg-paper/80 backdrop-blur lg:border-none lg:bg-paper/60">
@@ -150,9 +166,9 @@ export function AppFrame({ space, base, sample, pendingVoice = 0, back, right, c
       </header>
 
       <main className="px-4 pb-24 pt-4 lg:px-10 lg:pt-2">
-        <div className="mb-8">
-          <h1 className="font-serif text-[1.9rem] font-bold leading-tight lg:text-[2.4rem]">{h.title}</h1>
-          <p className="mt-1.5 text-ink-soft lg:text-lg">{h.sub}</p>
+        <div className={isHome ? "sr-only" : sub.startsWith("/chat") ? "mb-4 lg:mb-8" : "mb-8"}>
+          <h1 className={`font-serif font-bold leading-tight lg:text-[2.4rem] ${sub.startsWith("/chat") ? "text-[1.5rem]" : "text-[1.9rem]"}`}>{h.title}</h1>
+          <p className={`mt-1.5 text-ink-soft lg:text-lg ${sub.startsWith("/chat") ? "hidden sm:block" : ""}`}>{h.sub}</p>
         </div>
         <div className={isHome ? "max-w-[88rem]" : "max-w-3xl"}>{children}</div>
       </main>

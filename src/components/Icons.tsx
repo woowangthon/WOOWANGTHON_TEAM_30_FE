@@ -86,18 +86,3 @@ export function Logo({ className = "" }: { className?: string }) {
   );
 }
 
-/** 사이드바 아래쪽에 깔리는 잎 그림자 (장식) */
-export function LeafShadow({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 200 260" className={className} aria-hidden="true" fill="currentColor">
-      <path d="M40 260c10-60 30-110 70-150" stroke="currentColor" strokeWidth="3" fill="none" />
-      <ellipse cx="70" cy="200" rx="34" ry="14" transform="rotate(-35 70 200)" />
-      <ellipse cx="112" cy="150" rx="30" ry="12" transform="rotate(-50 112 150)" />
-      <ellipse cx="40" cy="160" rx="28" ry="11" transform="rotate(40 40 160)" />
-      <ellipse cx="140" cy="100" rx="26" ry="10" transform="rotate(-25 140 100)" />
-      <ellipse cx="96" cy="96" rx="24" ry="10" transform="rotate(55 96 96)" />
-      <ellipse cx="150" cy="190" rx="30" ry="12" transform="rotate(-10 150 190)" />
-      <ellipse cx="22" cy="220" rx="24" ry="10" transform="rotate(20 22 220)" />
-    </svg>
-  );
-}
