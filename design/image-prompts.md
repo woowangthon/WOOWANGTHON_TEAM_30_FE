@@ -24,7 +24,7 @@ soft hand-painted watercolor illustration with delicate ink linework, warm morni
 | `chapter-table.webp` ✅ | 1200×440 | 홈 주제 카드 (가족·사랑·명절·응원) |
 | `chapter-walk.webp` ✅ | 1200×440 | 홈 주제 카드 (계절·날씨·여행·고향) |
 | `ahead-tea.webp` ✅ | 1200×900 (4:3) | 첫 화면 '미리 남겨 두기' 칸 |
-| `sidebar-leaves.webp` (선택) | 600×900 (2:3 세로) | 공간 화면 왼쪽 메뉴 아래쪽, 은은한 잎 그림자. 없으면 안 보여요 |
+| `sidebar-leaves.webp` ✅ | 600×900 (2:3 세로) | 공간 화면 왼쪽 메뉴 아래쪽, 은은한 잎 그림자. 없으면 안 보여요 |
 | `empty-letters.webp` ✅ | 1400×500 (약 2.8:1) | 내 공간 목록이 비었을 때 |
 
 ## 프롬프트

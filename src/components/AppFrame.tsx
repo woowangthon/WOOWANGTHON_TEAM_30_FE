@@ -109,7 +109,7 @@ export function AppFrame({ space, base, sample, pendingVoice = 0, back, right, c
           src="/images/sidebar-leaves.webp"
           alt=""
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 w-full opacity-60 mix-blend-multiply"
+          className="pointer-events-none absolute inset-x-0 bottom-0 w-full opacity-70 mix-blend-multiply [mask-image:linear-gradient(to_bottom,transparent,black_45%)]"
           onError={(e) => (e.currentTarget.style.display = "none")}
         />
       </aside>
