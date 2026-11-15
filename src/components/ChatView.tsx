@@ -105,10 +105,8 @@ export function ChatView({ space }: { space: Space; canFavorite?: boolean }) {
 
       {turns.length === 0 && (
         <>
-          <PersonBubble person={person}>
-            <p className="text-ink-soft">{person}에게 하고 싶은 말을 보내 보세요.</p>
-          </PersonBubble>
-          <div className="flex flex-wrap gap-2 pl-11" aria-label="이렇게 말을 걸어 보세요">
+          <p className="pt-2 text-center text-[0.95rem] text-ink-soft">{person}에게 하고 싶은 말을 보내 보세요. 이렇게 시작해도 좋아요.</p>
+          <div className="flex flex-wrap justify-center gap-2" aria-label="이렇게 말을 걸어 보세요">
             {STARTERS.map((s) => (
               <button key={s} type="button" className="chip min-h-10" onClick={() => void send(s)} disabled={busy}>
                 {s}
@@ -157,13 +155,13 @@ export function ChatView({ space }: { space: Space; canFavorite?: boolean }) {
               void send(text);
             }
           }}
-          placeholder="메시지를 적어 주세요"
+          placeholder="메시지 보내기"
           className="max-h-40 min-h-14 flex-1 resize-none rounded-2xl px-3 py-3 text-lg focus:outline-none"
         />
         {config.data?.stt_available && <MicButton spaceId={space.id} onText={(v) => setText((x) => (x ? `${x} ${v}` : v))} />}
-        <button className="btn-primary h-14 rounded-2xl" disabled={busy || !text.trim()}>
+        <button className="btn-primary h-14 rounded-2xl px-4 sm:px-5" disabled={busy || !text.trim()} aria-label="보내기">
           <Icon name="send" size={18} />
-          보내기
+          <span className="hidden sm:inline">보내기</span>
         </button>
       </form>
       {turns.length > 0 && (
